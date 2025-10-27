@@ -1,10 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
+import path from 'path';
+import fs from 'fs';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, phone, service, date, time, message } = body;
+
+    // Google Calendar API setup
+    const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+    const keyPath = path.join(process.cwd(), 'credentials/google-service-account.json');
+    const keyFile = fs.readFileSync(keyPath, 'utf8');
+    const credentials = JSON.parse(keyFile);
+
+    const jwtClient = new google.auth.JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
+      scopes: SCOPES
+    });
+    const calendar = google.calendar({ version: 'v3', auth: jwtClient });
+
+    // Set event start/end time in RFC3339 format
+    const eventStart = new Date(`${date}T${time}:00`);
+    const eventEnd = new Date(eventStart.getTime() + 60 * 60 * 1000); // 1 hour meeting
+
+    // Create Google Calendar event with Meet link
+    let meetLink = '';
+    try {
+      const event = await calendar.events.insert({
+        calendarId: 'primary',
+        requestBody: {
+          summary: `Consultation: ${service} with ${name}`,
+          description: message || '',
+          start: { dateTime: eventStart.toISOString() },
+          end: { dateTime: eventEnd.toISOString() },
+          attendees: [
+            { email: email },
+            { email: 'karimamdou7@gmail.com' }
+          ],
+          conferenceData: {
+            createRequest: {
+              requestId: `${Date.now()}-${Math.random()}`,
+              conferenceSolutionKey: { type: 'hangoutsMeet' }
+            }
+          }
+        },
+        conferenceDataVersion: 1
+      });
+      meetLink = event.data.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || '';
+    } catch (err) {
+      console.error('Failed to create Google Meet event:', err);
+      meetLink = '';
+    }
 
     // Log to verify environment variables are loaded
     console.log('EMAIL_USER:', process.env.EMAIL_USER);
@@ -62,6 +111,12 @@ export async function POST(request: NextRequest) {
             <strong>Additional Information:</strong>
             <div style="margin-top: 4px; color: #333;">${message || 'No additional information provided'}</div>
           </div>
+          <div style="margin-top: 24px;">
+            <strong>Google Meet Link:</strong>
+            <div style="margin-top: 4px;">
+              ${meetLink ? `<a href="${meetLink}" target="_blank">${meetLink}</a>` : 'No meeting link generated.'}
+            </div>
+          </div>
           <hr style="margin: 24px 0;">
           <div style="font-size: 13px; color: #888;">
             NS Financial and Bookkeeping Services LLC<br>
@@ -89,6 +144,12 @@ export async function POST(request: NextRequest) {
             <tr><td style="padding: 6px 0;"><strong>Requested Date:</strong></td><td>${date}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Requested Time:</strong></td><td>${time}</td></tr>
           </table>
+          <div style="margin-top: 24px;">
+            <strong>Google Meet Link:</strong>
+            <div style="margin-top: 4px;">
+              ${meetLink ? `<a href="${meetLink}" target="_blank">${meetLink}</a>` : 'No meeting link generated.'}
+            </div>
+          </div>
           <p style="margin-top: 16px;">Our team will review your request and contact you within 24 hours to confirm your appointment.</p>
           <p style="margin-top: 24px;">Best regards,<br>
           <strong>NS Financial and Bookkeeping Services LLC</strong></p>
