@@ -329,13 +329,13 @@ export default function NSFinancialWebsite() {
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 cursor-pointer"
                 >
                   <option value="" className="text-gray-400">Select a service</option>
-                  <option value="bookkeeping">Bookkeeping & Accounting</option>
-                  <option value="reporting">Financial Reporting</option>
-                  <option value="budgeting">Budgeting & Forecasting</option>
-                  <option value="payroll">Payroll Processing</option>
-                  <option value="tax">Tax Preparation</option>
-                  <option value="advisory">Financial Advisory</option>
-                  <option value="new-business">New Business Setup</option>
+                  <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
+                  <option value="Financial Reporting">Financial Reporting</option>
+                  <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
+                  <option value="Payroll Processing">Payroll Processing</option>
+                  <option value="Tax Preparation">Tax Preparation</option>
+                  <option value="Financial Advisory">Financial Advisory</option>
+                  <option value="New Business Setup">New Business Setup</option>
                 </select>
               </div>
             </div>
