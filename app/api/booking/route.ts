@@ -21,6 +21,9 @@ export async function POST(request: NextRequest) {
     });
     const calendar = google.calendar({ version: 'v3', auth: jwtClient });
 
+    // Debug date and time input
+    console.log('Booking date:', date, 'time:', time);
+
     // Set event start/end time in RFC3339 format
     const eventStart = new Date(`${date}T${time}:00`);
     const eventEnd = new Date(eventStart.getTime() + 60 * 60 * 1000); // 1 hour meeting
