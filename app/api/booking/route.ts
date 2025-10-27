@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
         conferenceDataVersion: 1
       });
       meetLink = event.data.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || '';
-    } catch (err) {
-      console.error('Failed to create Google Meet event:', err);
+    } catch (err: any) {
+      console.error('Failed to create Google Meet event:', err?.response?.data || err);
       meetLink = '';
     }
 
