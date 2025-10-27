@@ -11,9 +11,8 @@ export async function POST(request: NextRequest) {
 
     // Google Calendar API setup
     const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-    const keyPath = path.join(process.cwd(), 'credentials/google-service-account.json');
-    const keyFile = fs.readFileSync(keyPath, 'utf8');
-    const credentials = JSON.parse(keyFile);
+    // Use GOOGLE_SERVICE_ACCOUNT_JSON env variable for serverless compatibility
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '{}');
 
     const jwtClient = new google.auth.JWT({
       email: credentials.client_email,
