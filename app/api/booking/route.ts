@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     let meetLink = '';
     try {
       const event = await calendar.events.insert({
-        calendarId: 'primary',
+        calendarId: 'a294a7b64d804b5d90d11a2785f3aab2499f5e7306b8d7a84348ace7409fd088@group.calendar.google.com',
         requestBody: {
           summary: `Consultation: ${service} with ${name}`,
           description: message || '',
