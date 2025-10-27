@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Dynamically construct logo URL based on request origin
-    const logoUrl = `${request.nextUrl.origin}/public/logo.png`;
+    const logoUrl = `${request.nextUrl.origin}/logo.png`;
 
     // Email to business owner
     const ownerMailOptions = {
