@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Email to business owner
     const ownerMailOptions = {
-      from: "info@nsfinancialservice.com",
+      from: 'info@nsfinancialservice.com',
       to: 'karimamdou7@gmail.com', // Send to yourself for testing
       subject: `New Consultation Booking - ${name}`,
       html: `
