@@ -24,8 +24,20 @@ export async function POST(request: NextRequest) {
     // Debug date and time input
     console.log('Booking date:', date, 'time:', time);
 
+    // Convert 12-hour time (e.g., "2:00 PM") to 24-hour format (e.g., "14:00")
+    function to24Hour(t: string) {
+      const match = t.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+      if (!match) return t; // already 24-hour or invalid
+      let [_, hour, min, ampm] = match;
+      let h = parseInt(hour, 10);
+      if (ampm.toUpperCase() === 'PM' && h !== 12) h += 12;
+      if (ampm.toUpperCase() === 'AM' && h === 12) h = 0;
+      return `${h.toString().padStart(2, '0')}:${min}`;
+    }
+    const time24 = to24Hour(time);
+
     // Set event start/end time in RFC3339 format
-    const eventStart = new Date(`${date}T${time}:00`);
+    const eventStart = new Date(`${date}T${time24}:00`);
     const eventEnd = new Date(eventStart.getTime() + 60 * 60 * 1000); // 1 hour meeting
 
     // Create Google Calendar event with Meet link
