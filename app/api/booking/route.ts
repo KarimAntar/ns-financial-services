@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Email to business owner
     const ownerMailOptions = {
-      from: process.env.EMAIL_USER,
+      from: "info@nsfinancialservice.com",
       to: 'karimamdou7@gmail.com', // Send to yourself for testing
       subject: `New Consultation Booking - ${name}`,
       html: `
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
 
     // Confirmation email to client
     const clientMailOptions = {
-      from: process.env.EMAIL_USER,
+      from: "info@nsfinancialservice.com",
       to: email,
       subject: 'Consultation Booking Confirmation - NS Financial Services',
       html: `
