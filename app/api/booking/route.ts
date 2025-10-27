@@ -42,15 +42,28 @@ export async function POST(request: NextRequest) {
       to: 'karimamdou7@gmail.com', // Send to yourself for testing
       subject: `New Consultation Booking - ${name}`,
       html: `
-        <h2>New Consultation Booking Request</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Service:</strong> ${service}</p>
-        <p><strong>Preferred Date:</strong> ${date}</p>
-        <p><strong>Preferred Time:</strong> ${time}</p>
-        <p><strong>Additional Information:</strong></p>
-        <p>${message || 'No additional information provided'}</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
+          <img src="https://nsfinancialservice.com/logo.png" alt="NS Financial Logo" style="height: 48px; margin-bottom: 16px;">
+          <h2 style="color: #1a237e;">New Consultation Booking Request</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 6px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Email:</strong></td><td>${email}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Phone:</strong></td><td>${phone}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Service:</strong></td><td>${service}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Preferred Date:</strong></td><td>${date}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Preferred Time:</strong></td><td>${time}</td></tr>
+          </table>
+          <div style="margin-top: 16px;">
+            <strong>Additional Information:</strong>
+            <div style="margin-top: 4px; color: #333;">${message || 'No additional information provided'}</div>
+          </div>
+          <hr style="margin: 24px 0;">
+          <div style="font-size: 13px; color: #888;">
+            NS Financial and Bookkeeping Services LLC<br>
+            Email: info@nsfinancialservice.com<br>
+            Address: 1500 N. Grant St. Ste R, Denver, CO 80203
+          </div>
+        </div>
       `,
     };
 
@@ -60,17 +73,23 @@ export async function POST(request: NextRequest) {
       to: email,
       subject: 'Consultation Booking Confirmation - NS Financial Services',
       html: `
-        <h2>Thank You for Your Booking Request!</h2>
-        <p>Dear ${name},</p>
-        <p>We have received your consultation booking request for <strong>${service}</strong>.</p>
-        <p><strong>Requested Date:</strong> ${date}</p>
-        <p><strong>Requested Time:</strong> ${time}</p>
-        <p>Our team will review your request and contact you within 24 hours to confirm your appointment.</p>
-        <br>
-        <p>Best regards,</p>
-        <p><strong>NS Financial and Bookkeeping Services LLC</strong></p>
-        <p>Email: info@nsfinancialservice.com</p>
-        <p>Address: 1500 N. Grant St. Ste R, Denver, CO 80203</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
+          <img src="https://nsfinancialservice.com/logo.png" alt="NS Financial Logo" style="height: 48px; margin-bottom: 16px;">
+          <h2 style="color: #1a237e;">Thank You for Your Booking Request!</h2>
+          <p>Dear ${name},</p>
+          <p>We have received your consultation booking request for <strong>${service}</strong>.</p>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 6px 0;"><strong>Requested Date:</strong></td><td>${date}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Requested Time:</strong></td><td>${time}</td></tr>
+          </table>
+          <p style="margin-top: 16px;">Our team will review your request and contact you within 24 hours to confirm your appointment.</p>
+          <p style="margin-top: 24px;">Best regards,<br>
+          <strong>NS Financial and Bookkeeping Services LLC</strong></p>
+          <div style="font-size: 13px; color: #888;">
+            Email: info@nsfinancialservice.com<br>
+            Address: 1500 N. Grant St. Ste R, Denver, CO 80203
+          </div>
+        </div>
       `,
     };
 
