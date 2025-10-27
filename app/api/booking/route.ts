@@ -9,17 +9,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, phone, service, date, time, message } = body;
 
-    // Google Calendar API setup
-    const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-    // Use GOOGLE_SERVICE_ACCOUNT_JSON env variable for serverless compatibility
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '{}');
+    // Google Calendar API setup (OAuth2)
+    const { google } = require('googleapis');
+    const { OAuth2 } = google.auth;
 
-    const jwtClient = new google.auth.JWT({
-      email: credentials.client_email,
-      key: credentials.private_key,
-      scopes: SCOPES
-    });
-    const calendar = google.calendar({ version: 'v3', auth: jwtClient });
+    const CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID!;
+    const CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET!;
+    const REDIRECT_URI = process.env.GOOGLE_OAUTH_REDIRECT_URI!;
+    const REFRESH_TOKEN = process.env.GOOGLE_OAUTH_REFRESH_TOKEN!; // Set this after OAuth2 flow
+
+    const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+    oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
 
     // Debug date and time input
     console.log('Booking date:', date, 'time:', time);
