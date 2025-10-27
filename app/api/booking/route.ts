@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     let meetLink = '';
     try {
       const event = await calendar.events.insert({
-        calendarId: 'a294a7b64d804b5d90d11a2785f3aab2499f5e7306b8d7a84348ace7409fd088@group.calendar.google.com',
+        calendarId: 'info@nsfinancialservice.com',
         requestBody: {
           summary: `Consultation: ${service} with ${name}`,
           description: message || '',
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
           end: { dateTime: eventEnd.toISOString() },
           attendees: [
             { email: email },
-            { email: 'karimamdou7@gmail.com' }
+            { email: 'info@nsfinancialservice.com' }
           ],
           conferenceData: {
             createRequest: {
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
     // Email to business owner
     const ownerMailOptions = {
       from: 'info@nsfinancialservice.com',
-      to: 'karimamdou7@gmail.com', // Send to yourself for testing
+      to: 'info@nsfinancialservice.com', // Send to yourself for testing
       subject: `New Consultation Booking - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
