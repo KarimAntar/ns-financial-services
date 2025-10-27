@@ -15,6 +15,7 @@ export default function NSFinancialWebsite() {
     message: ''
   });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const services = [
     {
@@ -80,51 +81,55 @@ export default function NSFinancialWebsite() {
   };
 
   const handleBookingSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-  
-  // Add validation
-  if (!bookingForm.name || !bookingForm.email || !bookingForm.phone || 
-      !bookingForm.service || !bookingForm.date || !bookingForm.time) {
-    alert('Please fill in all required fields');
-    return;
-  }
+    e.preventDefault();
+    if (isSubmitting) return;
 
-  console.log('Submitting booking:', bookingForm);
-
-  try {
-    const response = await fetch('/api/booking', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bookingForm),
-    });
-
-    const data = await response.json();
-    console.log('Response:', data);
-
-    if (response.ok) {
-      setBookingSubmitted(true);
-      setTimeout(() => {
-        setBookingSubmitted(false);
-        setBookingForm({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          date: '',
-          time: '',
-          message: ''
-        });
-      }, 5000);
-    } else {
-      alert('Error: ' + data.error);
+    // Add validation
+    if (!bookingForm.name || !bookingForm.email || !bookingForm.phone || 
+        !bookingForm.service || !bookingForm.date || !bookingForm.time) {
+      alert('Please fill in all required fields');
+      return;
     }
-  } catch (error) {
-    console.error('Error submitting booking:', error);
-    alert('Failed to submit booking. Please try again.');
-  }
-};
+
+    setIsSubmitting(true);
+    console.log('Submitting booking:', bookingForm);
+
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingForm),
+      });
+
+      const data = await response.json();
+      console.log('Response:', data);
+
+      if (response.ok) {
+        setBookingSubmitted(true);
+        setTimeout(() => {
+          setBookingSubmitted(false);
+          setBookingForm({
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            date: '',
+            time: '',
+            message: ''
+          });
+        }, 5000);
+      } else {
+        alert('Error: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      alert('Failed to submit booking. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const Navigation = () => (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50 border-b-2 border-gray-200">
@@ -387,10 +392,15 @@ export default function NSFinancialWebsite() {
 
             <button
               onClick={handleBookingSubmit}
-              className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-bold hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl hover:scale-105 transform flex items-center justify-center cursor-pointer"
+              disabled={isSubmitting}
+              className={`w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center ${
+                isSubmitting
+                  ? 'opacity-60 cursor-not-allowed'
+                  : 'hover:bg-blue-700 hover:shadow-xl hover:scale-105 transform cursor-pointer'
+              }`}
             >
               <Calendar className="w-6 h-6 mr-3" />
-              Schedule Consultation
+              {isSubmitting ? 'Sending...' : 'Schedule Consultation'}
             </button>
           </div>
         )}
