@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
     // Email to business owner
     const ownerMailOptions = {
       from: 'info@nsfinancialservice.com',
-      to: 'info@nsfinancialservice.com', // Send to yourself for testing
+      to: 'info@nsfinancialservice.com',
       subject: `New Consultation Booking - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
@@ -182,9 +182,14 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail(ownerMailOptions);
     console.log('Owner email sent!');
 
-    console.log('Sending confirmation to client...');
-    await transporter.sendMail(clientMailOptions);
-    console.log('Client email sent!');
+    // Send confirmation email to client (separately, catch errors)
+    try {
+      console.log('Sending confirmation to client...');
+      await transporter.sendMail(clientMailOptions);
+      console.log('Client email sent!');
+    } catch (clientErr) {
+      console.error('Failed to send confirmation email to client:', clientErr);
+    }
 
     return NextResponse.json(
       { 
