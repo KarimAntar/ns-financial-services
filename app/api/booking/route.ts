@@ -92,13 +92,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create email transporter
+    // Create email transporter using Google SMTP relay
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp-relay.gmail.com',
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     // Dynamically construct logo URL based on request origin
