@@ -184,8 +184,9 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to client (separately, catch errors)
     try {
-      console.log('Sending confirmation to client...');
-      await transporter.sendMail(clientMailOptions);
+      console.log('DEBUG: About to send confirmation to client:', clientMailOptions);
+      const clientResult = await transporter.sendMail(clientMailOptions);
+      console.log('DEBUG: Client email sendMail result:', clientResult);
       console.log('Client email sent!');
     } catch (clientErr) {
       console.error('Failed to send confirmation email to client:', clientErr);
