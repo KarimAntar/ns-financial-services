@@ -28,11 +28,11 @@ const BookingSection = React.memo(function BookingSection({
   return (
     <div className="py-20 px-4 bg-white">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-4 text-gray-900">
-          Book Your Consultation
+        <h2 className="text-5xl font-bold text-center mb-4 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+          Let's Work Together
         </h2>
         <p className="text-center text-gray-600 text-lg mb-12">
-          We can add this sentence about the form in the middle
+          We can add this sentence about the form, in the middle
         </p>
 
         {bookingSubmitted ? (
@@ -72,7 +72,7 @@ const BookingSection = React.memo(function BookingSection({
                   value={bookingForm.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
-                  placeholder="Email"
+                  placeholder="your@email.com"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ const BookingSection = React.memo(function BookingSection({
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all text-gray-700"
                 >
-                  <option value="">Select a service</option>
+                  <option value="">✓ Select a service</option>
                   <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
                   <option value="Financial Reporting">Financial Reporting</option>
                   <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
@@ -168,7 +168,7 @@ const BookingSection = React.memo(function BookingSection({
             <button
               onClick={handleBookingSubmit}
               disabled={isSubmitting}
-              className={`group w-full bg-gradient-to-r from-teal-600 to-teal-700 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center cursor-pointer ${
+              className={`group w-full bg-gradient-to-r from-teal-700 to-teal-800 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center cursor-pointer ${
                 isSubmitting
                   ? 'opacity-60 cursor-not-allowed'
                   : 'hover:shadow-2xl hover:scale-105 transform'
@@ -210,32 +210,32 @@ export default function NSFinancialWebsite() {
 
   const services = [
     {
-      icon: <BarChart3 className="w-8 h-8" />,
+      icon: <BarChart3 className="w-7 h-7" />,
       title: "Financial Reporting",
       description: "Preparing balance sheets, income statements, and cash flow reports for better business insight.",
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-7 h-7" />,
       title: "Payroll Processing",
       description: "Ensuring timely, compliant payroll and tax deductions.",
     },
     {
-      icon: <Building2 className="w-8 h-8" />,
+      icon: <Building2 className="w-7 h-7" />,
       title: "Tax Preparation & Support",
       description: "Assisting with business tax organization and documentation (non-attestation).",
     },
     {
-      icon: <PieChart className="w-8 h-8" />,
+      icon: <PieChart className="w-7 h-7" />,
       title: "Budgeting & Forecasting",
       description: "Helping businesses plan for growth and manage cash flow effectively.",
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />,
+      icon: <TrendingUp className="w-7 h-7" />,
       title: "Financial Analysis & Advisory",
       description: "Offering insights into profitability, performance, and financial strategy.",
     },
     {
-      icon: <Calculator className="w-8 h-8" />,
+      icon: <Calculator className="w-7 h-7" />,
       title: "Bookkeeping & Accounting",
       description: "Recording transactions, managing accounts payable/receivable, and maintaining accurate books.",
     }
@@ -297,17 +297,17 @@ export default function NSFinancialWebsite() {
 
   const Navigation = () => (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
+      scrolled ? 'shadow-lg' : ''
     }`}>
-      {/* Top bar */}
-      <div className="bg-gradient-to-r from-teal-700 to-teal-800 text-white py-2 px-4">
-        <div className="max-w-7xl mx-auto flex justify-end items-center text-sm space-x-6">
+      {/* Top bar with contact info */}
+      <div className="bg-gradient-to-r from-teal-700 to-teal-800 text-white py-2.5 px-4">
+        <div className="max-w-7xl mx-auto flex justify-end items-center text-xs space-x-6">
           <a href="mailto:info@nsfinancialservice.com" className="hover:text-teal-200 transition-colors flex items-center">
-            <Mail className="w-4 h-4 mr-2" />
+            <Mail className="w-3.5 h-3.5 mr-1.5" />
             info@nsfinancialservice.com
           </a>
           <span className="flex items-center">
-            <MapPin className="w-4 h-4 mr-2" />
+            <MapPin className="w-3.5 h-3.5 mr-1.5" />
             1500 N. Grant St. Ste R, Denver, CO 80203
           </span>
         </div>
@@ -317,11 +317,11 @@ export default function NSFinancialWebsite() {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
-              <div className="bg-gradient-to-br from-teal-700 to-teal-800 p-2 rounded-lg shadow-md">
-                <DollarSign className="w-6 h-6 text-white" />
+            <div className="flex items-center space-x-2 group cursor-pointer" onClick={() => setActiveSection('home')}>
+              <div className="bg-gradient-to-br from-teal-700 to-teal-800 p-1.5 rounded-lg shadow-md">
+                <DollarSign className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900">NS Financial Services</span>
+              <span className="text-sm font-bold text-gray-900">NS Financial Services</span>
             </div>
             <div className="hidden md:flex space-x-1">
               {[
@@ -335,7 +335,7 @@ export default function NSFinancialWebsite() {
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`capitalize text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
+                  className={`capitalize text-xs font-medium px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
                     activeSection === item.id
                       ? 'bg-gradient-to-r from-teal-700 to-teal-800 text-white shadow-md'
                       : 'text-gray-700 hover:bg-teal-50 hover:text-teal-700'
@@ -353,22 +353,29 @@ export default function NSFinancialWebsite() {
 
   const Hero = React.memo(() => {
     return (
-      <div className="relative bg-white text-gray-900 py-24 px-4 overflow-hidden">
-        {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/background.jpg"
-            alt="Background"
-            fill
-            className="object-cover opacity-10"
-            priority
-          />
-        </div>
-
+      <div className="relative bg-white text-gray-900 py-20 px-4 overflow-hidden">
         <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center z-10">
-          {/* Left side - Text */}
-          <div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
+          {/* Left side - Image with professional fade */}
+          <div className="relative order-2 md:order-1">
+            <div className="relative overflow-hidden rounded-2xl">
+              {/* Gradient overlay for professional fade effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-900/20 via-transparent to-teal-900/20 z-10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent z-10 pointer-events-none"></div>
+              
+              <Image
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
+                alt="Professional Financial Team"
+                width={600}
+                height={600}
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Right side - Text */}
+          <div className="order-1 md:order-2">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-gray-900">
               Noura Salman (NS) Financial<br />
               and Bookkeeping Services LLC
             </h1>
@@ -377,31 +384,18 @@ export default function NSFinancialWebsite() {
               Simplify Your Finances. Focus on Your Business.
             </p>
 
-            <p className="text-lg mb-8 text-gray-700 leading-relaxed">
+            <p className="text-base mb-8 text-gray-700 leading-relaxed">
               Licensed financial and bookkeeping firm dedicated to helping individuals, entrepreneurs, 
               and small businesses manage their finances with accuracy, clarity, and confidence.
             </p>
 
             <button
               onClick={() => setActiveSection('booking')}
-              className="group bg-gradient-to-r from-teal-700 to-teal-800 text-white px-10 py-4 rounded-lg text-lg font-bold hover:shadow-xl transition-all duration-300 inline-flex items-center cursor-pointer"
+              className="group bg-gradient-to-r from-teal-700 to-teal-800 text-white px-8 py-3 rounded-lg text-base font-bold hover:shadow-xl transition-all duration-300 inline-flex items-center cursor-pointer"
             >
               Book a Free Consultation
-              <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
             </button>
-          </div>
-
-          {/* Right side - Image */}
-          <div className="relative">
-            <div className="rounded-2xl shadow-2xl overflow-hidden">
-              <Image
-                src="/background.jpg"
-                alt="Financial Services"
-                width={600}
-                height={600}
-                className="w-full h-auto rounded-2xl"
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -415,22 +409,22 @@ export default function NSFinancialWebsite() {
           <h2 className="text-5xl font-bold text-center mb-4 text-gray-900">
             Our Services
           </h2>
-          <p className="text-center text-gray-600 text-lg mb-16">
+          <p className="text-center text-gray-600 text-base mb-16">
             Comprehensive financial solutions tailored to your business needs
           </p>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="group flex items-start space-x-4 p-6 hover:bg-gray-50 rounded-xl transition-all duration-300"
+                className="group flex items-start space-x-4 p-5 hover:bg-gray-50 rounded-lg transition-all duration-300"
               >
-                <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                   <div className="text-white">{service.icon}</div>
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold mb-2 text-gray-900">
+                  <h3 className="text-base font-bold mb-2 text-gray-900">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
@@ -472,7 +466,7 @@ export default function NSFinancialWebsite() {
             Why Choose Us?
           </h2>
           
-          <div className="space-y-12">
+          <div className="space-y-8">
             {reasons.map((reason, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start gap-6">
                 {/* Icon on the left */}
@@ -480,18 +474,18 @@ export default function NSFinancialWebsite() {
                   <Image
                     src={`/${reason.icon}`}
                     alt={reason.title}
-                    width={80}
-                    height={80}
+                    width={70}
+                    height={70}
                     className="object-contain"
                   />
                 </div>
                 
                 {/* Text content */}
                 <div className="flex-1">
-                  <h3 className={`text-2xl font-bold mb-4 ${reason.color}`}>
+                  <h3 className={`text-xl font-bold mb-3 ${reason.color}`}>
                     {index + 1}. {reason.title}
                   </h3>
-                  <p className="text-gray-700 text-lg leading-relaxed">
+                  <p className="text-gray-700 text-base leading-relaxed">
                     {reason.description}
                   </p>
                 </div>
@@ -579,19 +573,23 @@ export default function NSFinancialWebsite() {
           Testimonials
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+          {[
+            { name: "Sarah Johnson", role: "Small Business Owner", feedback: "NS Financial transformed how I manage my business finances. Professional, reliable, and always available when I need support!" },
+            { name: "Michael Chen", role: "Startup Founder", feedback: "The team's expertise in bookkeeping and financial reporting has been invaluable. They truly understand the challenges of growing a business." },
+            { name: "Jennifer Martinez", role: "Restaurant Owner", feedback: "Outstanding service! They handle all my payroll and tax prep seamlessly. I can finally focus on running my restaurant without financial stress." }
+          ].map((item, index) => (
+            <div key={index} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
-                  {item}
+                  {item.name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Client Name</h4>
-                  <p className="text-sm text-gray-600">Business Owner</p>
+                  <h4 className="font-bold text-gray-900">{item.name}</h4>
+                  <p className="text-sm text-gray-600">{item.role}</p>
                 </div>
               </div>
               <p className="text-gray-700 italic">
-                "Excellent service and professional financial guidance. Highly recommended for any small business!"
+                "{item.feedback}"
               </p>
             </div>
           ))}
