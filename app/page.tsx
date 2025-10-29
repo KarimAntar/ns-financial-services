@@ -3,6 +3,187 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown } from 'lucide-react';
 
+const BookingSection = React.memo(function BookingSection({
+  bookingForm,
+  handleInputChange,
+  handleBookingSubmit,
+  bookingSubmitted,
+  isSubmitting
+}: {
+  bookingForm: {
+    name: string;
+    email: string;
+    phone: string;
+    service: string;
+    date: string;
+    time: string;
+    message: string;
+  };
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+  handleBookingSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  bookingSubmitted: boolean;
+  isSubmitting: boolean;
+}) {
+  return (
+    <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-5xl font-bold text-center mb-6 text-gray-900">
+          Book a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Consultation</span>
+        </h2>
+        <p className="text-center text-gray-600 text-lg mb-12">
+          Schedule a free consultation to discuss your financial needs
+        </p>
+
+        {bookingSubmitted ? (
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-12 text-center shadow-xl">
+            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+              <CheckCircle className="w-12 h-12 text-white" />
+            </div>
+            <h3 className="text-3xl font-bold text-green-800 mb-4">Booking Received!</h3>
+            <p className="text-green-700 text-lg">
+              Thank you for scheduling a consultation. We will contact you shortly to confirm your appointment.
+            </p>
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-100">
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={bookingForm.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
+                  placeholder="John Doe"
+                />
+              </div>
+              
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={bookingForm.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
+                  placeholder="john@example.com"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Phone *
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={bookingForm.phone}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+              
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Service Needed *
+                </label>
+                <select
+                  name="service"
+                  value={bookingForm.service}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
+                >
+                  <option value="">Select a service</option>
+                  <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
+                  <option value="Financial Reporting">Financial Reporting</option>
+                  <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
+                  <option value="Payroll Processing">Payroll Processing</option>
+                  <option value="Tax Preparation">Tax Preparation</option>
+                  <option value="Financial Advisory">Financial Advisory</option>
+                  <option value="New Business Setup">New Business Setup</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Preferred Date *
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  value={bookingForm.date}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
+                />
+              </div>
+              
+              <div className="group">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                  Preferred Time *
+                </label>
+                <select
+                  name="time"
+                  value={bookingForm.time}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
+                >
+                  <option value="">Select a time</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="mb-8 group">
+              <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
+                Additional Information
+              </label>
+              <textarea
+                name="message"
+                value={bookingForm.message}
+                onChange={handleInputChange}
+                rows={4}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
+                placeholder="Tell us about your business and financial needs..."
+              ></textarea>
+            </div>
+
+            <button
+              onClick={handleBookingSubmit}
+              disabled={isSubmitting}
+              className={`group w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center cursor-pointer ${
+                isSubmitting
+                  ? 'opacity-60 cursor-not-allowed'
+                  : 'hover:shadow-2xl hover:scale-105 transform'
+              }`}
+            >
+              <Calendar className="w-6 h-6 mr-3" />
+              {isSubmitting ? 'Sending...' : 'Schedule Consultation'}
+              {!isSubmitting && <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+});
+
 export default function NSFinancialWebsite() {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
@@ -167,7 +348,7 @@ export default function NSFinancialWebsite() {
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
-                className={`capitalize text-base font-semibold px-5 py-2.5 rounded-xl transition-all duration-300 ${
+                className={`capitalize text-base font-semibold px-5 py-2.5 rounded-xl transition-all duration-300 cursor-pointer ${
                   activeSection === section
                     ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg scale-105'
                     : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:scale-105'
@@ -182,7 +363,7 @@ export default function NSFinancialWebsite() {
     </nav>
   );
 
-  const Hero = () => {
+  const Hero = React.memo(() => {
     const [currentWord, setCurrentWord] = useState(0);
     const words = ['Simplify', 'Transform', 'Optimize', 'Manage'];
     
@@ -214,10 +395,12 @@ export default function NSFinancialWebsite() {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight">
-            <span className="block drop-shadow-2xl">Noura Salman (NS) Financial</span>
-            <span className="block drop-shadow-2xl">and Bookkeeping Services LLC</span>
+          <h1 className="text-6xl md:text-7xl font-extrabold mb-2 leading-tight text-center">
+            Noura Salman
           </h1>
+          <div className="text-6xl md:text-5xl font-extrabold mb-2 leading-tight text-center">
+            Financial and Bookkeeping Services LLC
+          </div>
 
           <div className="text-2xl md:text-4xl font-bold mb-6 text-blue-100 drop-shadow-lg h-16 flex items-center justify-center">
             <span className="inline-block transition-all duration-500" key={currentWord}>
@@ -233,7 +416,7 @@ export default function NSFinancialWebsite() {
 
           <button
             onClick={() => setActiveSection('booking')}
-            className="group relative bg-white text-blue-600 px-12 py-5 rounded-xl text-xl font-bold hover:bg-blue-50 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-110 transform inline-flex items-center"
+            className="group relative bg-white text-blue-600 px-12 py-5 rounded-xl text-xl font-bold hover:bg-blue-50 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-110 transform inline-flex items-center cursor-pointer"
           >
             Book a Free Consultation
             <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
@@ -245,9 +428,9 @@ export default function NSFinancialWebsite() {
         </div>
       </div>
     );
-  };
+  });
 
-  const About = () => (
+  const About = React.memo(() => (
     <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-5xl font-bold text-center mb-16 text-gray-900">
@@ -293,32 +476,9 @@ export default function NSFinancialWebsite() {
         </div>
       </div>
     </div>
-  );
+  ));
 
-  const Services = () => {
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // Fix: Cast to HTMLElement to access dataset
-              const index = (entry.target as HTMLElement).dataset.index;
-              if (index) {
-                setVisibleCards((prev) => new Set([...prev, index]));
-              }
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      document.querySelectorAll('.service-card').forEach((card) => {
-        observer.observe(card);
-      });
-
-      return () => observer.disconnect();
-    }, []);
-
+  const Services = React.memo(() => {
     return (
       <div className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -334,9 +494,7 @@ export default function NSFinancialWebsite() {
               <div
                 key={index}
                 data-index={index}
-                className={`service-card group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2 overflow-hidden ${
-                  visibleCards.has(String(index)) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
+                className={`service-card group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2 overflow-hidden opacity-100 translate-y-0`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${service.color} transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}></div>
@@ -379,168 +537,10 @@ export default function NSFinancialWebsite() {
         </div>
       </div>
     );
-  };
+  });
 
-  const BookingSection = React.memo(() => (
-    <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-6 text-gray-900">
-          Book a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Consultation</span>
-        </h2>
-        <p className="text-center text-gray-600 text-lg mb-12">
-          Schedule a free consultation to discuss your financial needs
-        </p>
 
-        {bookingSubmitted ? (
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-12 text-center shadow-xl">
-            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-              <CheckCircle className="w-12 h-12 text-white" />
-            </div>
-            <h3 className="text-3xl font-bold text-green-800 mb-4">Booking Received!</h3>
-            <p className="text-green-700 text-lg">
-              Thank you for scheduling a consultation. We will contact you shortly to confirm your appointment.
-            </p>
-          </div>
-        ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-100">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={bookingForm.name}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
-                  placeholder="John Doe"
-                />
-              </div>
-              
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={bookingForm.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
-                  placeholder="john@example.com"
-                />
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Phone *
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={bookingForm.phone}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
-                  placeholder="(555) 123-4567"
-                />
-              </div>
-              
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Service Needed *
-                </label>
-                <select
-                  name="service"
-                  value={bookingForm.service}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
-                >
-                  <option value="">Select a service</option>
-                  <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
-                  <option value="Financial Reporting">Financial Reporting</option>
-                  <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
-                  <option value="Payroll Processing">Payroll Processing</option>
-                  <option value="Tax Preparation">Tax Preparation</option>
-                  <option value="Financial Advisory">Financial Advisory</option>
-                  <option value="New Business Setup">New Business Setup</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Preferred Date *
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={bookingForm.date}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
-                />
-              </div>
-              
-              <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                  Preferred Time *
-                </label>
-                <select
-                  name="time"
-                  value={bookingForm.time}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all text-gray-700 hover:border-blue-400"
-                >
-                  <option value="">Select a time</option>
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="10:00 AM">10:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="12:00 PM">12:00 PM</option>
-                  <option value="1:00 PM">1:00 PM</option>
-                  <option value="2:00 PM">2:00 PM</option>
-                  <option value="3:00 PM">3:00 PM</option>
-                  <option value="4:00 PM">4:00 PM</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="mb-8 group">
-              <label className="block text-gray-700 font-semibold mb-2 text-sm group-hover:text-blue-600 transition-colors">
-                Additional Information
-              </label>
-              <textarea
-                name="message"
-                value={bookingForm.message}
-                onChange={handleInputChange}
-                rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none placeholder:text-gray-400 text-gray-700 hover:border-blue-400"
-                placeholder="Tell us about your business and financial needs..."
-              ></textarea>
-            </div>
-
-            <button
-              onClick={handleBookingSubmit}
-              disabled={isSubmitting}
-              className={`group w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center ${
-                isSubmitting
-                  ? 'opacity-60 cursor-not-allowed'
-                  : 'hover:shadow-2xl hover:scale-105 transform'
-              }`}
-            >
-              <Calendar className="w-6 h-6 mr-3" />
-              {isSubmitting ? 'Sending...' : 'Schedule Consultation'}
-              {!isSubmitting && <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  ));
-
-  const Contact = () => (
+  const Contact = React.memo(() => (
     <div className="py-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-5xl font-bold text-center mb-16 text-gray-900">
@@ -553,7 +553,7 @@ export default function NSFinancialWebsite() {
               <Mail className="w-10 h-10 text-white" />
             </div>
             <h3 className="text-2xl font-bold mb-4 text-gray-900">Email</h3>
-            <a href="mailto:info@nsfinancialservice.com" className="text-blue-600 hover:text-blue-700 text-lg font-medium hover:underline transition-colors">
+            <a href="mailto:info@nsfinancialservice.com" className="text-blue-600 hover:text-blue-700 text-lg font-medium hover:underline transition-colors cursor-pointer">
               info@nsfinancialservice.com
             </a>
           </div>
@@ -586,7 +586,7 @@ export default function NSFinancialWebsite() {
         </div>
       </div>
     </div>
-  );
+  ));
 
   const Footer = () => (
     <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-12 px-4">
@@ -620,7 +620,16 @@ export default function NSFinancialWebsite() {
         )}
         {activeSection === 'about' && <About />}
         {activeSection === 'services' && <Services />}
-        {activeSection === 'booking' && <BookingSection />}
+// Pass props to BookingSection
+{activeSection === 'booking' && (
+  <BookingSection
+    bookingForm={bookingForm}
+    handleInputChange={handleInputChange}
+    handleBookingSubmit={handleBookingSubmit}
+    bookingSubmitted={bookingSubmitted}
+    isSubmitting={isSubmitting}
+  />
+)}
         {activeSection === 'contact' && <Contact />}
       </div>
       <Footer />
