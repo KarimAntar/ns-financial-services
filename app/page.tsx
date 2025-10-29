@@ -1,8 +1,48 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown, BarChart3, Calculator, PieChart, Building2 } from 'lucide-react';
+
+// Animated Text Component with typing effect
+const AnimatedText = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentText, setCurrentText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const phrases = [
+    "Simplify Your Finances. Focus on Your Business.",
+    "Licensed financial and bookkeeping firm dedicated to helping you succeed.",
+    "Expert guidance for entrepreneurs and small businesses.",
+    "Manage your finances with accuracy, clarity, and confidence."
+  ];
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const fullText = phrases[currentIndex];
+      
+      if (!isDeleting && currentText === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && currentText === '') {
+        setIsDeleting(false);
+        setCurrentIndex((prev) => (prev + 1) % phrases.length);
+      } else if (isDeleting) {
+        setCurrentText(fullText.substring(0, currentText.length - 1));
+      } else {
+        setCurrentText(fullText.substring(0, currentText.length + 1));
+      }
+    }, isDeleting ? 50 : 100);
+
+    return () => clearTimeout(timeout);
+  }, [currentText, isDeleting, currentIndex]);
+
+  return (
+    <p className="text-lg md:text-xl mb-8 text-gray-700 leading-relaxed min-h-[80px]">
+      {currentText}
+      <span className="animate-pulse">|</span>
+    </p>
+  );
+};
 
 const BookingSection = React.memo(function BookingSection({
   bookingForm,
@@ -26,17 +66,17 @@ const BookingSection = React.memo(function BookingSection({
   isSubmitting: boolean;
 }) {
   return (
-    <div className="py-20 px-4 bg-white">
+    <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-4 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+        <h2 className="text-5xl font-bold text-center mb-4 text-[#114040]" style={{ fontFamily: 'Georgia, serif' }}>
           Let's Work Together
         </h2>
         <p className="text-center text-gray-600 text-lg mb-12">
-          We can add this sentence about the form, in the middle
+          Schedule a consultation to discuss how we can help your business thrive
         </p>
 
         {bookingSubmitted ? (
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-12 text-center shadow-xl">
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-12 text-center shadow-xl animate-fadeIn">
             <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
               <CheckCircle className="w-12 h-12 text-white" />
             </div>
@@ -46,7 +86,7 @@ const BookingSection = React.memo(function BookingSection({
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl p-10 border border-gray-100 animate-slideUp">
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="group">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm">
@@ -57,7 +97,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="name"
                   value={bookingForm.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
                   placeholder="First Name"
                 />
               </div>
@@ -71,7 +111,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="email"
                   value={bookingForm.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
                   placeholder="your@email.com"
                 />
               </div>
@@ -87,7 +127,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="phone"
                   value={bookingForm.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -100,7 +140,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="service"
                   value={bookingForm.service}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
                 >
                   <option value="">✓ Select a service</option>
                   <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
@@ -124,7 +164,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="date"
                   value={bookingForm.date}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
                 />
               </div>
               
@@ -136,7 +176,7 @@ const BookingSection = React.memo(function BookingSection({
                   name="time"
                   value={bookingForm.time}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
                 >
                   <option value="">Select a time</option>
                   <option value="9:00 AM">9:00 AM</option>
@@ -160,7 +200,7 @@ const BookingSection = React.memo(function BookingSection({
                 value={bookingForm.message}
                 onChange={handleInputChange}
                 rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent transition-all resize-none placeholder:text-gray-400 text-gray-700"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all resize-none placeholder:text-gray-400 text-gray-700"
                 placeholder="Tell us about your business and financial needs..."
               ></textarea>
             </div>
@@ -168,7 +208,7 @@ const BookingSection = React.memo(function BookingSection({
             <button
               onClick={handleBookingSubmit}
               disabled={isSubmitting}
-              className={`group w-full bg-gradient-to-r from-teal-700 to-teal-800 text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center cursor-pointer ${
+              className={`group w-full bg-gradient-to-r from-[#018880] to-[#002830] text-white py-4 rounded-lg text-lg font-bold transition-all shadow-lg flex items-center justify-center cursor-pointer ${
                 isSubmitting
                   ? 'opacity-60 cursor-not-allowed'
                   : 'hover:shadow-2xl hover:scale-105 transform'
@@ -299,10 +339,10 @@ export default function NSFinancialWebsite() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled ? 'shadow-lg' : ''
     }`}>
-      {/* Top bar with contact info */}
-      <div className="bg-gradient-to-r from-teal-700 to-teal-800 text-white py-2.5 px-4">
+      {/* Top bar with contact info - Dark Teal/Green gradient */}
+      <div className="bg-gradient-to-r from-[#002830] to-[#00282F] text-white py-2.5 px-4">
         <div className="max-w-7xl mx-auto flex justify-end items-center text-xs space-x-6">
-          <a href="mailto:info@nsfinancialservice.com" className="hover:text-teal-200 transition-colors flex items-center">
+          <a href="mailto:info@nsfinancialservice.com" className="hover:text-[#018880] transition-colors flex items-center">
             <Mail className="w-3.5 h-3.5 mr-1.5" />
             info@nsfinancialservice.com
           </a>
@@ -316,12 +356,18 @@ export default function NSFinancialWebsite() {
       {/* Main navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2 group cursor-pointer" onClick={() => setActiveSection('home')}>
-              <div className="bg-gradient-to-br from-teal-700 to-teal-800 p-1.5 rounded-lg shadow-md">
-                <DollarSign className="w-5 h-5 text-white" />
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
+              <div className="bg-white p-2 rounded-lg shadow-md">
+                <Image
+                  src="/logo_100x100.png"
+                  alt="NS Financial Logo"
+                  width={50}
+                  height={50}
+                  className="object-contain"
+                />
               </div>
-              <span className="text-sm font-bold text-gray-900">NS Financial Services</span>
+              <span className="text-sm font-bold text-[#114040]">NS Financial Services</span>
             </div>
             <div className="hidden md:flex space-x-1">
               {[
@@ -335,10 +381,10 @@ export default function NSFinancialWebsite() {
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`capitalize text-xs font-medium px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
+                  className={`capitalize text-xs font-medium px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
                     activeSection === item.id
-                      ? 'bg-gradient-to-r from-teal-700 to-teal-800 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-teal-50 hover:text-teal-700'
+                      ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white shadow-md'
+                      : 'text-[#222222] hover:bg-[#E6E6E0] hover:text-[#114040]'
                   }`}
                 >
                   {item.label}
@@ -353,17 +399,34 @@ export default function NSFinancialWebsite() {
 
   const Hero = React.memo(() => {
     return (
-      <div className="relative bg-white text-gray-900 py-20 px-4 overflow-hidden">
+      <div className="relative text-gray-900 py-20 px-4 overflow-hidden">
+        {/* Background Image with fade overlay */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/background.jpg"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/70"></div>
+        </div>
+
         <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center z-10">
           {/* Left side - Image with professional fade */}
-          <div className="relative order-2 md:order-1">
-            <div className="relative overflow-hidden rounded-2xl">
-              {/* Gradient overlay for professional fade effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-900/20 via-transparent to-teal-900/20 z-10 pointer-events-none"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 via-transparent to-transparent z-10 pointer-events-none"></div>
+          <div className="relative order-2 md:order-1 animate-fadeInLeft">
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+              {/* Professional gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#114040]/20 via-transparent to-[#018880]/20 z-10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#002830]/40 via-transparent to-transparent z-10 pointer-events-none"></div>
+              
+              {/* Faded border effect */}
+              <div className="absolute inset-0 z-20 pointer-events-none" style={{
+                boxShadow: 'inset 0 0 60px 20px rgba(255,255,255,0.3)'
+              }}></div>
               
               <Image
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
+                src="/background.jpg"
                 alt="Professional Financial Team"
                 width={600}
                 height={600}
@@ -373,25 +436,18 @@ export default function NSFinancialWebsite() {
             </div>
           </div>
 
-          {/* Right side - Text */}
-          <div className="order-1 md:order-2">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-gray-900">
+          {/* Right side - Text with animations */}
+          <div className="order-1 md:order-2 animate-fadeInRight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-[#114040]">
               Noura Salman (NS) Financial<br />
               and Bookkeeping Services LLC
             </h1>
 
-            <p className="text-xl md:text-2xl font-semibold mb-4 text-teal-700">
-              Simplify Your Finances. Focus on Your Business.
-            </p>
-
-            <p className="text-base mb-8 text-gray-700 leading-relaxed">
-              Licensed financial and bookkeeping firm dedicated to helping individuals, entrepreneurs, 
-              and small businesses manage their finances with accuracy, clarity, and confidence.
-            </p>
+            <AnimatedText />
 
             <button
               onClick={() => setActiveSection('booking')}
-              className="group bg-gradient-to-r from-teal-700 to-teal-800 text-white px-8 py-3 rounded-lg text-base font-bold hover:shadow-xl transition-all duration-300 inline-flex items-center cursor-pointer"
+              className="group bg-gradient-to-r from-[#018880] to-[#002830] text-white px-8 py-4 rounded-lg text-base font-bold hover:shadow-2xl transition-all duration-300 inline-flex items-center cursor-pointer animate-pulse-slow"
             >
               Book a Free Consultation
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
@@ -404,12 +460,12 @@ export default function NSFinancialWebsite() {
 
   const Services = React.memo(() => {
     return (
-      <div className="py-20 px-4 bg-white">
+      <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-4 text-gray-900">
+          <h2 className="text-5xl font-bold text-center mb-4 text-[#114040] animate-fadeIn">
             Our Services
           </h2>
-          <p className="text-center text-gray-600 text-base mb-16">
+          <p className="text-center text-gray-600 text-base mb-16 animate-fadeIn">
             Comprehensive financial solutions tailored to your business needs
           </p>
           
@@ -417,14 +473,15 @@ export default function NSFinancialWebsite() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="group flex items-start space-x-4 p-5 hover:bg-gray-50 rounded-lg transition-all duration-300"
+                className="group flex items-start space-x-4 p-6 hover:bg-white rounded-xl transition-all duration-300 shadow-sm hover:shadow-xl animate-slideUp border border-gray-100"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#018880] to-[#002830] rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                   <div className="text-white">{service.icon}</div>
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="text-base font-bold mb-2 text-gray-900">
+                  <h3 className="text-base font-bold mb-2 text-[#114040] group-hover:text-[#018880] transition-colors">
                     {service.title}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
@@ -442,47 +499,51 @@ export default function NSFinancialWebsite() {
       {
         title: "We Treat Your Business Like Our Own",
         description: "Your goals matter to us. We take the time to understand your business, your story, and your vision — offering bookkeeping and financial support that fits you, not just the numbers.",
-        color: "text-rose-600",
+        color: "from-[#018880] to-[#002830]",
         icon: "IMG_3606.png"
       },
       {
         title: "Honest, Reliable, and Easy to Work With",
         description: "You can count on clear communication, accurate work, and real support whenever you need it. We believe trust and transparency are the foundation of every strong partnership.",
-        color: "text-blue-600",
+        color: "from-[#002830] to-[#114040]",
         icon: "IMG_3603.png"
       },
       {
         title: "Helping You Stress Less and Grow More",
         description: "Managing your books shouldn't feel overwhelming. We keep things organized and simple, so you can focus on running your business while we take care of the rest.",
-        color: "text-purple-600",
+        color: "from-[#114040] to-[#018880]",
         icon: "Helping_You_.png"
       }
     ];
 
     return (
-      <div className="py-20 px-4 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-16 text-gray-900">
+      <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
             Why Choose Us?
           </h2>
           
-          <div className="space-y-8">
+          <div className="space-y-6">
             {reasons.map((reason, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 flex items-start gap-6">
-                {/* Icon on the left */}
-                <div className="flex-shrink-0">
+              <div 
+                key={index} 
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 flex items-start gap-6 border border-gray-100 animate-slideUp group"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                {/* Icon with gradient background */}
+                <div className={`flex-shrink-0 w-20 h-20 bg-gradient-to-br ${reason.color} rounded-2xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <Image
                     src={`/${reason.icon}`}
                     alt={reason.title}
                     width={70}
                     height={70}
-                    className="object-contain"
+                    className="object-contain w-full h-full"
                   />
                 </div>
                 
                 {/* Text content */}
                 <div className="flex-1">
-                  <h3 className={`text-xl font-bold mb-3 ${reason.color}`}>
+                  <h3 className={`text-xl font-bold mb-3 bg-gradient-to-r ${reason.color} bg-clip-text text-transparent`}>
                     {index + 1}. {reason.title}
                   </h3>
                   <p className="text-gray-700 text-base leading-relaxed">
@@ -500,15 +561,15 @@ export default function NSFinancialWebsite() {
   const About = React.memo(() => (
     <div className="py-20 px-4 bg-white">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">
+        <h2 className="text-5xl font-bold text-center mb-12 text-[#114040] animate-fadeIn">
           What About Us
         </h2>
         
-        <div className="bg-gradient-to-r from-teal-50 to-gray-50 p-10 rounded-2xl shadow-lg">
+        <div className="bg-gradient-to-br from-[#E6E6E0] to-white p-10 rounded-2xl shadow-xl border border-gray-200 animate-slideUp">
           <p className="text-gray-700 leading-relaxed text-lg text-center">
-            <strong className="text-teal-700">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned 
+            <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned 
             business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses. 
-            Founded by <strong className="text-teal-700">Noora Salman</strong>, who holds a Bachelor's degree in 
+            Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in 
             Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience 
             in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights 
             to make confident, growth-driven decisions.
@@ -519,44 +580,44 @@ export default function NSFinancialWebsite() {
   ));
 
   const Contact = React.memo(() => (
-    <div className="py-20 px-4 bg-white">
+    <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-16 text-gray-900">
+        <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
           Contact Us
         </h2>
         
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow duration-300">
-            <div className="w-16 h-16 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp">
+            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Mail className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900">Email</h3>
-            <a href="mailto:info@nsfinancialservice.com" className="text-teal-700 hover:text-teal-800 font-medium hover:underline transition-colors cursor-pointer">
+            <h3 className="text-xl font-bold mb-2 text-[#114040]">Email</h3>
+            <a href="mailto:info@nsfinancialservice.com" className="text-[#018880] hover:text-[#002830] font-medium hover:underline transition-colors cursor-pointer">
               info@nsfinancialservice.com
             </a>
           </div>
           
-          <div className="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow duration-300">
-            <div className="w-16 h-16 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '100ms' }}>
+            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Clock className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900">Business Hours</h3>
+            <h3 className="text-xl font-bold mb-2 text-[#114040]">Business Hours</h3>
             <p className="text-gray-700">Monday - Friday</p>
             <p className="text-gray-700 font-semibold">9:00 AM - 5:00 PM</p>
           </div>
           
-          <div className="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow duration-300">
-            <div className="w-16 h-16 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '200ms' }}>
+            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <MapPin className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900">Location</h3>
+            <h3 className="text-xl font-bold mb-2 text-[#114040]">Location</h3>
             <p className="text-gray-700">1500 N. Grant St. Ste R</p>
             <p className="text-gray-700">Denver, CO 80203</p>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-teal-50 to-gray-50 p-10 rounded-xl text-center shadow-md">
-          <h3 className="text-2xl font-bold mb-3 text-gray-900">Nationwide Services</h3>
+        <div className="bg-gradient-to-r from-[#E6E6E0] to-white p-10 rounded-2xl text-center shadow-lg border border-gray-200 animate-fadeIn">
+          <h3 className="text-2xl font-bold mb-3 text-[#114040]">Nationwide Services</h3>
           <p className="text-gray-700 text-lg max-w-3xl mx-auto">
             We proudly serve clients nationwide, offering both in-person and virtual bookkeeping 
             services to fit your business needs.
@@ -567,9 +628,9 @@ export default function NSFinancialWebsite() {
   ));
 
   const Testimonials = React.memo(() => (
-    <div className="py-20 px-4 bg-gray-50">
+    <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-16 text-gray-900">
+        <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
           Testimonials
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -578,13 +639,17 @@ export default function NSFinancialWebsite() {
             { name: "Michael Chen", role: "Startup Founder", feedback: "The team's expertise in bookkeeping and financial reporting has been invaluable. They truly understand the challenges of growing a business." },
             { name: "Jennifer Martinez", role: "Restaurant Owner", feedback: "Outstanding service! They handle all my payroll and tax prep seamlessly. I can finally focus on running my restaurant without financial stress." }
           ].map((item, index) => (
-            <div key={index} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+            <div 
+              key={index} 
+              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 animate-slideUp"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center text-white font-bold text-lg mr-4 shadow-md">
                   {item.name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">{item.name}</h4>
+                  <h4 className="font-bold text-[#114040]">{item.name}</h4>
                   <p className="text-sm text-gray-600">{item.role}</p>
                 </div>
               </div>
@@ -599,36 +664,41 @@ export default function NSFinancialWebsite() {
   ));
 
   const Footer = () => (
-    <footer className="bg-gradient-to-br from-teal-900 to-teal-800 text-white py-12 px-4">
+    <footer className="bg-gradient-to-br from-[#002830] to-[#114040] text-white py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center mb-4">
-              <div className="bg-white p-2 rounded-lg mr-3">
-                <DollarSign className="w-8 h-8 text-teal-800" />
+              <div className="bg-white p-2 rounded-lg mr-3 shadow-lg">
+                <Image
+                  src="/logo_300x100.png"
+                  alt="NS Financial Logo"
+                  width={120}
+                  height={40}
+                  className="object-contain"
+                />
               </div>
-              <span className="text-xl font-bold">NS Financial Services</span>
             </div>
-            <p className="text-teal-100 text-sm">
+            <p className="text-gray-300 text-sm mt-4">
               Noura Salman (NS) Financial and Bookkeeping Services LLC
             </p>
           </div>
           
           <div>
             <h4 className="font-bold mb-4 text-lg">Contact</h4>
-            <p className="text-teal-100 text-sm mb-2">Email: info@nsfinancialservice.com</p>
-            <p className="text-teal-100 text-sm">Address: 1500 N. Grant St. Ste R, Denver, CO 80203</p>
+            <p className="text-gray-300 text-sm mb-2">Email: info@nsfinancialservice.com</p>
+            <p className="text-gray-300 text-sm">Address: 1500 N. Grant St. Ste R, Denver, CO 80203</p>
           </div>
           
           <div>
             <h4 className="font-bold mb-4 text-lg">Business Hours</h4>
-            <p className="text-teal-100 text-sm">Monday - Friday</p>
-            <p className="text-teal-100 text-sm">9:00 AM - 5:00 PM</p>
+            <p className="text-gray-300 text-sm">Monday - Friday</p>
+            <p className="text-gray-300 text-sm">9:00 AM - 5:00 PM</p>
           </div>
         </div>
         
-        <div className="border-t border-teal-700 pt-8 text-center">
-          <p className="text-teal-200 text-sm">
+        <div className="border-t border-[#018880]/30 pt-8 text-center">
+          <p className="text-gray-300 text-sm">
             © 2025 NS Financial and Bookkeeping Services LLC. All rights reserved.
           </p>
         </div>
