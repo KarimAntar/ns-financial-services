@@ -117,8 +117,16 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // Use public logo URL
-    const logoUrl = "https://www.nsfinancialservice.com/logo.png";
+    // Embed logo as Base64 data URI for email reliability
+    let logoUrl = "https://www.nsfinancialservice.com/logo.png";
+    try {
+      const logoPath = path.join(process.cwd(), "public", "logo.png");
+      const logoData = fs.readFileSync(logoPath);
+      const logoBase64 = logoData.toString("base64");
+      logoUrl = `data:image/png;base64,${logoBase64}`;
+    } catch (e) {
+      console.error("Failed to embed logo as Base64, falling back to public URL.", e);
+    }
 
     // Email to business owner
     const ownerMailOptions = {
