@@ -817,12 +817,12 @@ export default function NSFinancialWebsite() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center mb-4">
-              <div className="bg-white p-2 rounded-lg mr-3 shadow-lg">
+              <div className="bg-gradient-to-r from-[#018880] to-[#002830] p-3 rounded-lg shadow-lg">
                 <Image
-                  src="/logo_300x100.png"
+                  src="/logo_300x100_white.png"
                   alt="NS Financial Logo"
-                  width={120}
-                  height={40}
+                  width={150}
+                  height={50}
                   className="object-contain"
                 />
               </div>
