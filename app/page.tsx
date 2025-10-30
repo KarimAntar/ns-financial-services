@@ -342,9 +342,9 @@ export default function NSFinancialWebsite() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
-              <div className="bg-white p-2 rounded-lg shadow-lg">
+              <div className="bg-gradient-to-r from-[#018880] to-[#002830] p-3 rounded-lg shadow-lg">
                 <Image
-                  src="/logo_100x100.png"
+                  src="/logo_100x100_white.png"
                   alt="NS Financial Logo"
                   width={50}
                   height={50}
