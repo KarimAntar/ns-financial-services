@@ -336,11 +336,9 @@ export default function NSFinancialWebsite() {
   };
 
   const Navigation = () => (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-gradient-to-b from-black/40 to-transparent'
-    }`}>
-      {/* Main navigation */}
-      <div className={`transition-all duration-500`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+      {/* Main navigation - Always white background */}
+      <div className="transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
@@ -353,9 +351,7 @@ export default function NSFinancialWebsite() {
                   className="object-contain"
                 />
               </div>
-              <span className={`text-base font-semibold transition-colors duration-300 tracking-wide ${
-                scrolled ? 'text-[#114040]' : 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
-              }`} style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
+              <span className="text-base font-semibold transition-colors duration-300 tracking-wide text-[#114040]" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
                 Financial Services
               </span>
             </div>
@@ -373,10 +369,8 @@ export default function NSFinancialWebsite() {
                   onClick={() => setActiveSection(item.id)}
                   className={`capitalize text-sm font-medium px-4 py-2.5 rounded-lg transition-all duration-300 cursor-pointer tracking-wide ${
                     activeSection === item.id
-                      ? 'bg-white text-[#114040] shadow-lg font-semibold'
-                      : scrolled 
-                        ? 'text-[#114040] hover:bg-white/80 hover:text-[#018880]'
-                        : 'text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] hover:bg-white/25 font-medium'
+                      ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white shadow-lg font-semibold'
+                      : 'text-[#114040] hover:bg-gray-100 hover:text-[#018880]'
                   }`}
                   style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
                 >
@@ -385,11 +379,7 @@ export default function NSFinancialWebsite() {
               ))}
               <a
                 href="tel:1-800-555-6933"
-                className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 cursor-pointer shadow-lg ${
-                  scrolled
-                    ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white hover:shadow-xl'
-                    : 'bg-white/95 text-[#114040] hover:bg-white font-semibold'
-                }`}
+                className="flex items-center space-x-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 cursor-pointer shadow-md bg-gradient-to-r from-[#018880] to-[#002830] text-white hover:shadow-lg"
                 style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
               >
                 <span>📞</span>
@@ -397,11 +387,7 @@ export default function NSFinancialWebsite() {
               </a>
               <button
                 onClick={() => setActiveSection('contact')}
-                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg border-2 ${
-                  scrolled
-                    ? 'bg-white text-[#018880] border-[#018880] hover:bg-[#018880] hover:text-white'
-                    : 'bg-white/95 text-[#114040] border-white hover:bg-white'
-                }`}
+                className="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 cursor-pointer shadow-md border-2 bg-white text-[#018880] border-[#018880] hover:bg-[#018880] hover:text-white"
                 style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
               >
                 Contact us
