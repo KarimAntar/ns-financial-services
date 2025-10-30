@@ -702,6 +702,84 @@ export default function NSFinancialWebsite() {
     );
   });
 
+  const CTASection = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <div ref={sectionRef} className="py-20 px-4 bg-gradient-to-br from-[#018880] via-[#019680] to-[#114040] relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-10">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+
+        <div className={`max-w-4xl mx-auto text-center relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
+            Ready to Take Control of Your <span className="text-[#E6E6E0]">Finances</span>?
+          </h2>
+          
+          <p className="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
+            Join hundreds of successful business owners who trust us with their financial management
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={() => navigateToSection('booking')}
+              className="group bg-white text-[#018880] px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#E6E6E0] transition-all duration-300 shadow-2xl flex items-center cursor-pointer transform hover:scale-105"
+              style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+            >
+              Schedule Free Consultation
+              <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
+            </button>
+            
+            <button
+              onClick={() => navigateToSection('contact')}
+              className="group bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-bold hover:bg-white hover:text-[#018880] transition-all duration-300 shadow-xl flex items-center cursor-pointer"
+              style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+            >
+              Contact Us
+              <Mail className="ml-3 w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Trust indicators */}
+          <div className={`mt-16 grid grid-cols-3 gap-8 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">5+</div>
+              <div className="text-white/80 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Years Experience</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">100%</div>
+              <div className="text-white/80 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Client Satisfaction</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white mb-2">24/7</div>
+              <div className="text-white/80 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Support Available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  });
+
   const Contact = React.memo(() => (
     <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -914,6 +992,7 @@ export default function NSFinancialWebsite() {
             <WhyChooseUs />
             <Testimonials />
             <About />
+            <CTASection />
           </>
         )}
         {activeSection === 'about' && <About />}
