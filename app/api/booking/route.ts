@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Dynamically construct logo URL based on request origin
-    const logoUrl = `${request.nextUrl.origin}/logo.png`;
+    const logoUrl = `/logo.png`;
 
     // Email to business owner
     const ownerMailOptions = {
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
           <div style="text-align:center;">
-            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 150px;">
+            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 100px;">
           </div>
           <h2 style="color: #1a237e;">New Consultation Booking Request</h2>
           <table style="width: 100%; border-collapse: collapse;">
@@ -167,7 +167,7 @@ export async function POST(request: NextRequest) {
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
           <div style="text-align:center;">
-            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 150px;">
+            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 100px;">
           </div>
           <h2 style="color: #1a237e;">Thank You for Your Booking Request!</h2>
           <p>Dear ${name},</p>
