@@ -597,19 +597,19 @@ export default function NSFinancialWebsite() {
         title: "We Treat Your Business Like Our Own",
         description: "Your goals matter to us. We take the time to understand your business, your story, and your vision — offering bookkeeping and financial support that fits you, not just the numbers.",
         color: "from-[#018880] to-[#002830]",
-        icon: "IMG_3606.png"
+        icon: "Earn.png"
       },
       {
         title: "Honest, Reliable, and Easy to Work With",
         description: "You can count on clear communication, accurate work, and real support whenever you need it. We believe trust and transparency are the foundation of every strong partnership.",
         color: "from-[#002830] to-[#114040]",
-        icon: "IMG_3603.png"
+        icon: "Helping_You.png"
       },
       {
         title: "Helping You Stress Less and Grow More",
         description: "Managing your books shouldn't feel overwhelming. We keep things organized and simple, so you can focus on running your business while we take care of the rest.",
         color: "from-[#114040] to-[#018880]",
-        icon: "Helping_You_.png"
+        icon: "Growing.png"
       }
     ];
 
