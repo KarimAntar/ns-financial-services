@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown, BarChart3, Calculator, PieChart, Building2, User, Phone } from 'lucide-react';
+import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown, BarChart3, Calculator, PieChart, Building2, User, Phone, Home, Info, Briefcase, MessageSquare, Star } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 
 // Animated Text Component with typing effect
@@ -559,41 +559,27 @@ export default function NSFinancialWebsite() {
             </div>
             <div className="hidden md:flex items-center space-x-2">
               {[
-                { id: 'home', label: 'Home' },
-                { id: 'about', label: 'About' },
-                { id: 'services', label: 'Services' },
-                { id: 'testimonials', label: 'Testimonials' },
-                { id: 'booking', label: 'Booking' },
-                { id: 'contact', label: 'Contact' }
+                { id: 'home', label: 'Home', icon: <Home className="w-4 h-4" /> },
+                { id: 'about', label: 'About', icon: <Info className="w-4 h-4" /> },
+                { id: 'services', label: 'Services', icon: <Briefcase className="w-4 h-4" /> },
+                { id: 'testimonials', label: 'Testimonials', icon: <Star className="w-4 h-4" /> },
+                { id: 'booking', label: 'Book Your Consultation', icon: <Calendar className="w-4 h-4" /> },
+                { id: 'contact', label: 'Contact Us', icon: <MessageSquare className="w-4 h-4" /> }
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => navigateToSection(item.id)}
-                  className={`capitalize text-sm font-medium px-4 py-2.5 rounded-lg transition-all duration-300 cursor-pointer tracking-wide ${
+                  className={`capitalize text-sm font-medium px-4 py-2.5 rounded-lg transition-all duration-300 cursor-pointer tracking-wide flex items-center space-x-2 ${
                     activeSection === item.id
                       ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white shadow-lg font-semibold'
                       : 'text-[#114040] hover:bg-gray-100 hover:text-[#018880]'
                   }`}
                   style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
                 >
-                  {item.label}
+                  {item.icon}
+                  <span>{item.label}</span>
                 </button>
               ))}
-              <a
-                href="tel:1-800-555-6933"
-                className="flex items-center space-x-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 cursor-pointer shadow-md bg-gradient-to-r from-[#018880] to-[#002830] text-white hover:shadow-lg"
-                style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
-              >
-                <span>📞</span>
-                <span>1-800-555-6933</span>
-              </a>
-              <button
-                onClick={() => navigateToSection('contact')}
-                className="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 cursor-pointer shadow-md border-2 bg-white text-[#018880] border-[#018880] hover:bg-[#018880] hover:text-white"
-                style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
-              >
-                Contact us
-              </button>
             </div>
           </div>
         </div>
