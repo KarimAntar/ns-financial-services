@@ -206,12 +206,14 @@ from: "NS Financial Services <info@nsfinancialservice.com>",
     };
 
     // Send emails
+    console.log("DEBUG: Owner email HTML:\n", ownerMailOptions.html);
     console.log('Sending email to owner...');
     await transporter.sendMail(ownerMailOptions);
     console.log('Owner email sent!');
 
     // Send confirmation email to client (separately, catch errors)
     try {
+      console.log("DEBUG: Client email HTML:\n", clientMailOptions.html);
       console.log('DEBUG: About to send confirmation to client:', clientMailOptions);
       const clientResult = await transporter.sendMail(clientMailOptions);
       console.log('DEBUG: Client email sendMail result:', clientResult);
