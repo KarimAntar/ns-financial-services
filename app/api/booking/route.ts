@@ -175,7 +175,7 @@ from: "NS Financial Services <info@nsfinancialservice.com>",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
           <div style="text-align:center;">
-            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 100px;">
+            <img src="${logoUrl || 'https://www.nsfinancialservice.com/logo.png'}" alt="NS Financial Logo" style="height: 100px;">
           </div>
           <h2 style="color: #1a237e;">Thank You for Your Booking Request!</h2>
           <p>Dear ${name},</p>
