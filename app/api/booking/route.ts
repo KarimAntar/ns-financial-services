@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
 
     // Email to business owner
     const ownerMailOptions = {
-      from: 'info@nsfinancialservice.com',
+from: 'NS Financial Services <info@nsfinancialservice.com>',
       to: 'info@nsfinancialservice.com',
       subject: `New Consultation Booking - ${name}`,
       html: `
@@ -161,7 +161,7 @@ export async function POST(request: NextRequest) {
 
     // Confirmation email to client
     const clientMailOptions = {
-      from: "info@nsfinancialservice.com",
+from: "NS Financial Services <info@nsfinancialservice.com>",
       to: email,
       subject: 'Consultation Booking Confirmation - NS Financial Services',
       html: `
