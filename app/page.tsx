@@ -336,29 +336,15 @@ export default function NSFinancialWebsite() {
   };
 
   const Navigation = () => (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'shadow-lg' : ''
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-gradient-to-b from-black/40 to-transparent'
     }`}>
-      {/* Top bar with contact info - Dark Teal/Green gradient */}
-      <div className="bg-gradient-to-r from-[#002830] to-[#00282F] text-white py-2.5 px-4">
-        <div className="max-w-7xl mx-auto flex justify-end items-center text-xs space-x-6">
-          <a href="mailto:info@nsfinancialservice.com" className="hover:text-[#018880] transition-colors flex items-center">
-            <Mail className="w-3.5 h-3.5 mr-1.5" />
-            info@nsfinancialservice.com
-          </a>
-          <span className="flex items-center">
-            <MapPin className="w-3.5 h-3.5 mr-1.5" />
-            1500 N. Grant St. Ste R, Denver, CO 80203
-          </span>
-        </div>
-      </div>
-
       {/* Main navigation */}
-      <div className="bg-white border-b border-gray-200">
+      <div className={`transition-all duration-500`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
-              <div className="bg-white p-2 rounded-lg shadow-md">
+              <div className="bg-white p-2 rounded-lg shadow-lg">
                 <Image
                   src="/logo_100x100.png"
                   alt="NS Financial Logo"
@@ -367,9 +353,13 @@ export default function NSFinancialWebsite() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-sm font-bold text-[#114040]">NS Financial Services</span>
+              <span className={`text-base font-semibold transition-colors duration-300 tracking-wide ${
+                scrolled ? 'text-[#114040]' : 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
+              }`} style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
+                Financial Services
+              </span>
             </div>
-            <div className="hidden md:flex space-x-1">
+            <div className="hidden md:flex items-center space-x-2">
               {[
                 { id: 'home', label: 'Home' },
                 { id: 'about', label: 'About' },
@@ -381,15 +371,41 @@ export default function NSFinancialWebsite() {
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  className={`capitalize text-xs font-medium px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
+                  className={`capitalize text-sm font-medium px-4 py-2.5 rounded-lg transition-all duration-300 cursor-pointer tracking-wide ${
                     activeSection === item.id
-                      ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white shadow-md'
-                      : 'text-[#222222] hover:bg-[#E6E6E0] hover:text-[#114040]'
+                      ? 'bg-white text-[#114040] shadow-lg font-semibold'
+                      : scrolled 
+                        ? 'text-[#114040] hover:bg-white/80 hover:text-[#018880]'
+                        : 'text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] hover:bg-white/25 font-medium'
                   }`}
+                  style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
                 >
                   {item.label}
                 </button>
               ))}
+              <a
+                href="tel:1-800-555-6933"
+                className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 cursor-pointer shadow-lg ${
+                  scrolled
+                    ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white hover:shadow-xl'
+                    : 'bg-white/95 text-[#114040] hover:bg-white font-semibold'
+                }`}
+                style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+              >
+                <span>📞</span>
+                <span>1-800-555-6933</span>
+              </a>
+              <button
+                onClick={() => setActiveSection('contact')}
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 cursor-pointer shadow-lg border-2 ${
+                  scrolled
+                    ? 'bg-white text-[#018880] border-[#018880] hover:bg-[#018880] hover:text-white'
+                    : 'bg-white/95 text-[#114040] border-white hover:bg-white'
+                }`}
+                style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
+              >
+                Contact us
+              </button>
             </div>
           </div>
         </div>
@@ -459,13 +475,33 @@ export default function NSFinancialWebsite() {
   });
 
   const Services = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
     return (
-      <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
+      <div ref={sectionRef} className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-4 text-[#114040] animate-fadeIn">
+          <h2 className={`text-5xl font-bold text-center mb-4 text-[#114040] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Our Services
           </h2>
-          <p className="text-center text-gray-600 text-base mb-16 animate-fadeIn">
+          <p className={`text-center text-gray-600 text-base mb-16 transition-all duration-1000 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Comprehensive financial solutions tailored to your business needs
           </p>
           
@@ -473,10 +509,14 @@ export default function NSFinancialWebsite() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="group flex items-start space-x-4 p-6 hover:bg-white rounded-xl transition-all duration-300 shadow-sm hover:shadow-xl animate-slideUp border border-gray-100"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`group flex items-start space-x-4 p-6 hover:bg-white rounded-xl transition-all duration-500 shadow-sm hover:shadow-2xl border border-gray-100 transform hover:-translate-y-2 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ 
+                  transitionDelay: `${isVisible ? index * 100 : 0}ms`
+                }}
               >
-                <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#018880] to-[#002830] rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#018880] to-[#002830] rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <div className="text-white">{service.icon}</div>
                 </div>
                 
@@ -495,6 +535,26 @@ export default function NSFinancialWebsite() {
   });
 
   const WhyChooseUs = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
     const reasons = [
       {
         title: "We Treat Your Business Like Our Own",
@@ -517,9 +577,9 @@ export default function NSFinancialWebsite() {
     ];
 
     return (
-      <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <div ref={sectionRef} className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
+          <h2 className={`text-5xl font-bold text-center mb-16 text-[#114040] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Why Choose Us?
           </h2>
           
@@ -527,17 +587,21 @@ export default function NSFinancialWebsite() {
             {reasons.map((reason, index) => (
               <div 
                 key={index} 
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 flex items-start gap-6 border border-gray-100 animate-slideUp group"
-                style={{ animationDelay: `${index * 150}ms` }}
+                className={`bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 flex items-start gap-6 border border-gray-100 group transform hover:-translate-y-1 ${
+                  isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+                }`}
+                style={{ 
+                  transitionDelay: `${isVisible ? index * 150 : 0}ms`
+                }}
               >
-                {/* Icon with gradient background */}
-                <div className={`flex-shrink-0 w-20 h-20 bg-gradient-to-br ${reason.color} rounded-2xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                {/* Icon without background - just the image */}
+                <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Image
                     src={`/${reason.icon}`}
                     alt={reason.title}
-                    width={70}
-                    height={70}
-                    className="object-contain w-full h-full"
+                    width={80}
+                    height={80}
+                    className="object-contain w-full h-full drop-shadow-md"
                   />
                 </div>
                 
@@ -558,26 +622,48 @@ export default function NSFinancialWebsite() {
     );
   });
 
-  const About = React.memo(() => (
-    <div className="py-20 px-4 bg-white">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-12 text-[#114040] animate-fadeIn">
-          What About Us
-        </h2>
-        
-        <div className="bg-gradient-to-br from-[#E6E6E0] to-white p-10 rounded-2xl shadow-xl border border-gray-200 animate-slideUp">
-          <p className="text-gray-700 leading-relaxed text-lg text-center">
-            <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned 
-            business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses. 
-            Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in 
-            Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience 
-            in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights 
-            to make confident, growth-driven decisions.
-          </p>
+  const About = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <div ref={sectionRef} className="py-20 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className={`text-5xl font-bold text-center mb-12 text-[#114040] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            What About Us
+          </h2>
+          
+          <div className={`bg-gradient-to-br from-[#E6E6E0] to-white p-10 rounded-2xl shadow-xl border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
+            <p className="text-gray-700 leading-relaxed text-lg text-center">
+              <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned 
+              business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses. 
+              Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in 
+              Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience 
+              in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights 
+              to make confident, growth-driven decisions.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  ));
+    );
+  });
 
   const Contact = React.memo(() => (
     <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
@@ -627,41 +713,117 @@ export default function NSFinancialWebsite() {
     </div>
   ));
 
-  const Testimonials = React.memo(() => (
-    <div className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
-          Testimonials
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            { name: "Sarah Johnson", role: "Small Business Owner", feedback: "NS Financial transformed how I manage my business finances. Professional, reliable, and always available when I need support!" },
-            { name: "Michael Chen", role: "Startup Founder", feedback: "The team's expertise in bookkeeping and financial reporting has been invaluable. They truly understand the challenges of growing a business." },
-            { name: "Jennifer Martinez", role: "Restaurant Owner", feedback: "Outstanding service! They handle all my payroll and tax prep seamlessly. I can finally focus on running my restaurant without financial stress." }
-          ].map((item, index) => (
-            <div 
-              key={index} 
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 animate-slideUp"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center text-white font-bold text-lg mr-4 shadow-md">
-                  {item.name.charAt(0)}
+  const Testimonials = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <div ref={sectionRef} className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className={`text-5xl font-bold text-center mb-4 text-[#114040] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            What Our Clients Say
+          </h2>
+          <p className={`text-center text-gray-600 text-base mb-16 transition-all duration-1000 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Real feedback from businesses we've helped succeed
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { 
+                name: "Sarah Johnson", 
+                role: "Small Business Owner", 
+                feedback: "NS Financial transformed how I manage my business finances. Professional, reliable, and always available when I need support!",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
+              },
+              { 
+                name: "Michael Chen", 
+                role: "Startup Founder", 
+                feedback: "The team's expertise in bookkeeping and financial reporting has been invaluable. They truly understand the challenges of growing a business.",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
+              },
+              { 
+                name: "Jennifer Martinez", 
+                role: "Restaurant Owner", 
+                feedback: "Outstanding service! They handle all my payroll and tax prep seamlessly. I can finally focus on running my restaurant without financial stress.",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
+              },
+              { 
+                name: "David Thompson", 
+                role: "E-commerce Business", 
+                feedback: "Their attention to detail and proactive approach has saved us thousands. Best financial decision we made for our online business.",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
+              },
+              { 
+                name: "Emily Rodriguez", 
+                role: "Consulting Firm", 
+                feedback: "Working with NS Financial feels like having a trusted partner. They're not just bookkeepers, they're strategic advisors.",
+                avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop"
+              },
+              { 
+                name: "James Wilson", 
+                role: "Tech Startup CEO", 
+                feedback: "Fast, accurate, and incredibly responsive. They've streamlined our financial operations and helped us prepare for investor meetings.",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop"
+              }
+            ].map((item, index) => (
+              <div 
+                key={index} 
+                className={`bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 transform hover:-translate-y-2 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ 
+                  transitionDelay: `${isVisible ? index * 100 : 0}ms`,
+                  animationDelay: `${index * 100}ms`
+                }}
+              >
+                <div className="flex items-center mb-4">
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden mr-4 ring-2 ring-[#018880]/20 group-hover:ring-[#018880] transition-all">
+                    <Image
+                      src={item.avatar}
+                      alt={item.name}
+                      width={56}
+                      height={56}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#114040]">{item.name}</h4>
+                    <p className="text-sm text-gray-600">{item.role}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-[#114040]">{item.name}</h4>
-                  <p className="text-sm text-gray-600">{item.role}</p>
+                <div className="flex mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
                 </div>
+                <p className="text-gray-700 italic leading-relaxed">
+                  "{item.feedback}"
+                </p>
               </div>
-              <p className="text-gray-700 italic">
-                "{item.feedback}"
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  ));
+    );
+  });
 
   const Footer = () => (
     <footer className="bg-gradient-to-br from-[#002830] to-[#114040] text-white py-12 px-4">
@@ -679,26 +841,26 @@ export default function NSFinancialWebsite() {
                 />
               </div>
             </div>
-            <p className="text-gray-300 text-sm mt-4">
+            <p className="text-gray-300 text-sm mt-4" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
               Noura Salman (NS) Financial and Bookkeeping Services LLC
             </p>
           </div>
           
           <div>
-            <h4 className="font-bold mb-4 text-lg">Contact</h4>
-            <p className="text-gray-300 text-sm mb-2">Email: info@nsfinancialservice.com</p>
-            <p className="text-gray-300 text-sm">Address: 1500 N. Grant St. Ste R, Denver, CO 80203</p>
+            <h4 className="font-bold mb-4 text-lg" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Contact</h4>
+            <p className="text-gray-300 text-sm mb-2" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Email: info@nsfinancialservice.com</p>
+            <p className="text-gray-300 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Address: 1500 N. Grant St. Ste R, Denver, CO 80203</p>
           </div>
           
           <div>
-            <h4 className="font-bold mb-4 text-lg">Business Hours</h4>
-            <p className="text-gray-300 text-sm">Monday - Friday</p>
-            <p className="text-gray-300 text-sm">9:00 AM - 5:00 PM</p>
+            <h4 className="font-bold mb-4 text-lg" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Business Hours</h4>
+            <p className="text-gray-300 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>Monday - Friday</p>
+            <p className="text-gray-300 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>9:00 AM - 5:00 PM</p>
           </div>
         </div>
         
         <div className="border-t border-[#018880]/30 pt-8 text-center">
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-300 text-sm" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
             © 2025 NS Financial and Bookkeeping Services LLC. All rights reserved.
           </p>
         </div>
@@ -709,12 +871,13 @@ export default function NSFinancialWebsite() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      <div className="pt-28">
+      <div className="pt-20">
         {activeSection === 'home' && (
           <>
             <Hero />
             <Services />
             <WhyChooseUs />
+            <Testimonials />
             <About />
           </>
         )}
