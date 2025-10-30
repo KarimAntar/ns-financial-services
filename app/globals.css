@@ -383,3 +383,32 @@ textarea:focus {
     scroll-behavior: smooth;
   }
 }
+
+/* Enhanced Date Picker Styling */
+input[type="date"] {
+  position: relative;
+  background: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+input[type="date"]:focus {
+  background: #f9fafb;
+}
+
+input[type="date"]:hover {
+  background: #f9fafb;
+}
+
+/* Modern Date Picker for Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+  background: transparent;
+  color: #018880;
+  cursor: pointer;
+}
+
+/* Style the date picker dropdown */
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+  transition: all 0.2s;
+}

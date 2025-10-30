@@ -49,7 +49,8 @@ const BookingSection = React.memo(function BookingSection({
   handleInputChange,
   handleBookingSubmit,
   bookingSubmitted,
-  isSubmitting
+  isSubmitting,
+  minDate
 }: {
   bookingForm: {
     name: string;
@@ -65,6 +66,7 @@ const BookingSection = React.memo(function BookingSection({
   handleBookingSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   bookingSubmitted: boolean;
   isSubmitting: boolean;
+  minDate: string;
 }) {
   return (
     <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
@@ -175,37 +177,72 @@ const BookingSection = React.memo(function BookingSection({
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm flex items-center">
+                  <Calendar className="w-4 h-4 mr-2 text-[#018880]" />
                   Preferred Date *
                 </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={bookingForm.date}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
-                />
+                <div className="relative">
+                  <input
+                    type="date"
+                    name="date"
+                    value={bookingForm.date}
+                    onChange={handleInputChange}
+                    min={minDate}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880]"
+                    style={{
+                      colorScheme: 'light',
+                      WebkitAppearance: 'none',
+                      MozAppearance: 'none'
+                    }}
+                  />
+                  <style jsx>{`
+                    input[type="date"]::-webkit-calendar-picker-indicator {
+                      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23018880" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>') center/contain no-repeat;
+                      cursor: pointer;
+                      padding: 8px;
+                    }
+                    input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+                      padding: 0;
+                    }
+                    input[type="date"]::-webkit-datetime-edit-text {
+                      color: #018880;
+                      padding: 0 4px;
+                    }
+                    input[type="date"]::-webkit-datetime-edit-month-field,
+                    input[type="date"]::-webkit-datetime-edit-day-field,
+                    input[type="date"]::-webkit-datetime-edit-year-field {
+                      color: #114040;
+                      font-weight: 500;
+                    }
+                    input[type="date"]::-webkit-inner-spin-button,
+                    input[type="date"]::-webkit-clear-button {
+                      display: none;
+                    }
+                  `}</style>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Select a date from today onwards</p>
               </div>
               
               <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-[#018880]" />
                   Preferred Time *
                 </label>
                 <select
                   name="time"
                   value={bookingForm.time}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880]"
                 >
                   <option value="">Select a time</option>
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="10:00 AM">10:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="12:00 PM">12:00 PM</option>
-                  <option value="1:00 PM">1:00 PM</option>
-                  <option value="2:00 PM">2:00 PM</option>
-                  <option value="3:00 PM">3:00 PM</option>
-                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="9:00 AM">🕘 9:00 AM</option>
+                  <option value="10:00 AM">🕙 10:00 AM</option>
+                  <option value="11:00 AM">🕚 11:00 AM</option>
+                  <option value="12:00 PM">🕛 12:00 PM</option>
+                  <option value="1:00 PM">🕐 1:00 PM</option>
+                  <option value="2:00 PM">🕑 2:00 PM</option>
+                  <option value="3:00 PM">🕒 3:00 PM</option>
+                  <option value="4:00 PM">🕓 4:00 PM</option>
                 </select>
               </div>
             </div>
@@ -259,6 +296,16 @@ export default function NSFinancialWebsite() {
   });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [minDate, setMinDate] = useState('');
+
+  // Set minimum date to today
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    setMinDate(`${year}-${month}-${day}`);
+  }, []);
 
   // Handle browser back/forward buttons
   useEffect(() => {
@@ -1005,6 +1052,7 @@ export default function NSFinancialWebsite() {
             handleBookingSubmit={handleBookingSubmit}
             bookingSubmitted={bookingSubmitted}
             isSubmitting={isSubmitting}
+            minDate={minDate}
           />
         )}
         {activeSection === 'contact' && <Contact />}
