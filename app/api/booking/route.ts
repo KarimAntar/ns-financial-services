@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Dynamically construct logo URL based on request origin
-    const logoUrl = `/logo.png`;
+    const logoUrl = `https://www.nsfinancialservice.com/logo.png`;
 
     // Email to business owner
     const ownerMailOptions = {
