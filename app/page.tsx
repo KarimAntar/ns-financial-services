@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown, BarChart3, Calculator, PieChart, Building2 } from 'lucide-react';
+import { Calendar, Mail, MapPin, CheckCircle, DollarSign, TrendingUp, FileText, Users, Clock, Shield, Award, ArrowRight, ChevronDown, BarChart3, Calculator, PieChart, Building2, User, Phone } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
 
 // Animated Text Component with typing effect
 const AnimatedText = () => {
@@ -93,30 +94,40 @@ const BookingSection = React.memo(function BookingSection({
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="group">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm">
-                  Name (required)
+                  Name *
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={bookingForm.name}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
-                  placeholder="First Name"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <User className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={bookingForm.name}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                    placeholder="First Name"
+                  />
+                </div>
               </div>
               
               <div className="group">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm">
-                  Email (required)
+                  Email *
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={bookingForm.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
-                  placeholder="your@email.com"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={bookingForm.email}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                    placeholder="your@email.com"
+                  />
+                </div>
               </div>
             </div>
 
@@ -125,36 +136,47 @@ const BookingSection = React.memo(function BookingSection({
                 <label className="block text-gray-700 font-semibold mb-2 text-sm">
                   Phone *
                 </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={bookingForm.phone}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
-                  placeholder="(555) 123-4567"
-                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Phone className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={bookingForm.phone}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
               </div>
               
               <div className="group">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm">
                   Service Needed *
                 </label>
-                <select
-                  name="service"
-                  value={bookingForm.service}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700"
-                >
-                  <option value="">✓ Select a service</option>
-                  <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
-                  <option value="Financial Reporting">Financial Reporting</option>
-                  <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
-                  <option value="Payroll Processing">Payroll Processing</option>
-                  <option value="Tax Preparation">Tax Preparation</option>
-                  <option value="Financial Advisory">Financial Advisory</option>
-                  <option value="New Business Setup">New Business Setup</option>
-                  <option value="Other">Other</option>
-                </select>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FileText className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <select
+                    name="service"
+                    value={bookingForm.service}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 appearance-none bg-white"
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Bookkeeping & Accounting">Bookkeeping & Accounting</option>
+                    <option value="Financial Reporting">Financial Reporting</option>
+                    <option value="Budgeting & Forecasting">Budgeting & Forecasting</option>
+                    <option value="Payroll Processing">Payroll Processing</option>
+                    <option value="Tax Preparation">Tax Preparation</option>
+                    <option value="Financial Advisory">Financial Advisory</option>
+                    <option value="New Business Setup">New Business Setup</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                </div>
               </div>
             </div>
 
@@ -177,36 +199,39 @@ const BookingSection = React.memo(function BookingSection({
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm flex items-center">
-                  <Calendar className="w-4 h-4 mr-2 text-[#018880]" />
+                <label className="block text-gray-700 font-semibold mb-2 text-sm">
                   Preferred Date *
                 </label>
                 <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                    <Calendar className="h-5 w-5 text-gray-400" />
+                  </div>
                   <input
                     type="date"
                     name="date"
                     value={bookingForm.date}
                     onChange={handleInputChange}
                     min={minDate}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880]"
+                    className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880]"
                     style={{
                       colorScheme: 'light',
-                      WebkitAppearance: 'none',
-                      MozAppearance: 'none'
                     }}
                   />
                   <style jsx>{`
                     input[type="date"]::-webkit-calendar-picker-indicator {
-                      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23018880" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>') center/contain no-repeat;
+                      opacity: 0;
+                      position: absolute;
+                      right: 0;
+                      width: 100%;
+                      height: 100%;
                       cursor: pointer;
-                      padding: 8px;
                     }
                     input[type="date"]::-webkit-datetime-edit-fields-wrapper {
                       padding: 0;
                     }
                     input[type="date"]::-webkit-datetime-edit-text {
                       color: #018880;
-                      padding: 0 4px;
+                      padding: 0 2px;
                     }
                     input[type="date"]::-webkit-datetime-edit-month-field,
                     input[type="date"]::-webkit-datetime-edit-day-field,
@@ -224,32 +249,37 @@ const BookingSection = React.memo(function BookingSection({
               </div>
               
               <div className="group">
-                <label className="block text-gray-700 font-semibold mb-2 text-sm flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-[#018880]" />
+                <label className="block text-gray-700 font-semibold mb-2 text-sm">
                   Preferred Time *
                 </label>
-                <select
-                  name="time"
-                  value={bookingForm.time}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880]"
-                >
-                  <option value="">Select a time</option>
-                  <option value="9:00 AM">🕘 9:00 AM</option>
-                  <option value="10:00 AM">🕙 10:00 AM</option>
-                  <option value="11:00 AM">🕚 11:00 AM</option>
-                  <option value="12:00 PM">🕛 12:00 PM</option>
-                  <option value="1:00 PM">🕐 1:00 PM</option>
-                  <option value="2:00 PM">🕑 2:00 PM</option>
-                  <option value="3:00 PM">🕒 3:00 PM</option>
-                  <option value="4:00 PM">🕓 4:00 PM</option>
-                </select>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Clock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <select
+                    name="time"
+                    value={bookingForm.time}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all text-gray-700 cursor-pointer hover:border-[#018880] appearance-none bg-white"
+                  >
+                    <option value="">Select a time</option>
+                    <option value="9:00 AM">🕘 9:00 AM</option>
+                    <option value="10:00 AM">🕙 10:00 AM</option>
+                    <option value="11:00 AM">🕚 11:00 AM</option>
+                    <option value="12:00 PM">🕛 12:00 PM</option>
+                    <option value="1:00 PM">🕐 1:00 PM</option>
+                    <option value="2:00 PM">🕑 2:00 PM</option>
+                    <option value="3:00 PM">🕒 3:00 PM</option>
+                    <option value="4:00 PM">🕓 4:00 PM</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+                </div>
               </div>
             </div>
 
             <div className="mb-8 group">
               <label className="block text-gray-700 font-semibold mb-2 text-sm">
-                Additional Information
+                Additional Information (optional)
               </label>
               <textarea
                 name="message"
@@ -385,17 +415,52 @@ export default function NSFinancialWebsite() {
     // Validate required fields
     if (!bookingForm.name || !bookingForm.email || !bookingForm.phone || 
         !bookingForm.service || !bookingForm.date || !bookingForm.time) {
-      alert('Please fill in all required fields');
+      toast.error('Please fill in all required fields', {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#FEE2E2',
+          color: '#991B1B',
+          fontWeight: '600',
+          padding: '16px',
+          borderRadius: '12px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+        },
+        icon: '⚠️',
+      });
       return;
     }
 
     // Additional validation for "Other" service
     if (bookingForm.service === 'Other' && !bookingForm.otherService.trim()) {
-      alert('Please specify the service you need');
+      toast.error('Please specify the service you need', {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#FEE2E2',
+          color: '#991B1B',
+          fontWeight: '600',
+          padding: '16px',
+          borderRadius: '12px',
+        },
+        icon: '📝',
+      });
       return;
     }
 
     setIsSubmitting(true);
+    
+    // Show loading toast
+    const loadingToast = toast.loading('Submitting your booking...', {
+      position: 'top-center',
+      style: {
+        background: '#F3F4F6',
+        color: '#1F2937',
+        fontWeight: '600',
+        padding: '16px',
+        borderRadius: '12px',
+      },
+    });
     
     try {
       const response = await fetch('/api/booking', {
@@ -409,6 +474,21 @@ export default function NSFinancialWebsite() {
       const data = await response.json();
 
       if (response.ok) {
+        toast.dismiss(loadingToast);
+        toast.success('Booking submitted successfully! We\'ll contact you soon.', {
+          duration: 5000,
+          position: 'top-center',
+          style: {
+            background: '#D1FAE5',
+            color: '#065F46',
+            fontWeight: '600',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+          },
+          icon: '✅',
+        });
+        
         setBookingSubmitted(true);
         setTimeout(() => {
           setBookingSubmitted(false);
@@ -424,10 +504,34 @@ export default function NSFinancialWebsite() {
           });
         }, 5000);
       } else {
-        alert('Error: ' + data.error);
+        toast.dismiss(loadingToast);
+        toast.error(`Error: ${data.error}`, {
+          duration: 5000,
+          position: 'top-center',
+          style: {
+            background: '#FEE2E2',
+            color: '#991B1B',
+            fontWeight: '600',
+            padding: '16px',
+            borderRadius: '12px',
+          },
+          icon: '❌',
+        });
       }
     } catch (error) {
-      alert('Failed to submit booking. Please try again.');
+      toast.dismiss(loadingToast);
+      toast.error('Failed to submit booking. Please try again.', {
+        duration: 5000,
+        position: 'top-center',
+        style: {
+          background: '#FEE2E2',
+          color: '#991B1B',
+          fontWeight: '600',
+          padding: '16px',
+          borderRadius: '12px',
+        },
+        icon: '⚠️',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -1030,6 +1134,7 @@ export default function NSFinancialWebsite() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Toaster />
       <Navigation />
       <div className="pt-20">
         {activeSection === 'home' && (
