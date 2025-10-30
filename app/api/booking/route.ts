@@ -117,19 +117,8 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    // Embed logo as Base64 data URI for email reliability
-    let logoUrl: string | undefined = undefined;
-    try {
-      const logoPath = path.join(process.cwd(), "public", "logo.png");
-      const logoData = fs.readFileSync(logoPath);
-      const logoBase64 = logoData.toString("base64");
-      logoUrl = `data:image/png;base64,${logoBase64}`;
-    } catch (e) {
-      console.error("Failed to embed logo as Base64, falling back to public URL.", e);
-    }
-    if (!logoUrl) {
-      logoUrl = "https://www.nsfinancialservice.com/logo.png";
-    }
+    // Always use public logo URL for email reliability (Base64 is stripped by many clients)
+    const logoUrl = "https://www.nsfinancialservice.com/logo.png";
     console.log("DEBUG: logoUrl used in email:", logoUrl);
 
     // Email to business owner
