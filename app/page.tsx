@@ -56,6 +56,7 @@ const BookingSection = React.memo(function BookingSection({
     email: string;
     phone: string;
     service: string;
+    otherService: string;
     date: string;
     time: string;
     message: string;
@@ -150,9 +151,27 @@ const BookingSection = React.memo(function BookingSection({
                   <option value="Tax Preparation">Tax Preparation</option>
                   <option value="Financial Advisory">Financial Advisory</option>
                   <option value="New Business Setup">New Business Setup</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
             </div>
+
+            {/* Show "Other Service" field if "Other" is selected */}
+            {bookingForm.service === 'Other' && (
+              <div className="mb-6 group animate-slideDown">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm">
+                  Please specify the service you need *
+                </label>
+                <input
+                  type="text"
+                  name="otherService"
+                  value={bookingForm.otherService}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#018880] focus:border-transparent transition-all placeholder:text-gray-400 text-gray-700"
+                  placeholder="Describe the service you need..."
+                />
+              </div>
+            )}
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div className="group">
@@ -233,12 +252,36 @@ export default function NSFinancialWebsite() {
     email: '',
     phone: '',
     service: '',
+    otherService: '',
     date: '',
     time: '',
     message: ''
   });
   const [bookingSubmitted, setBookingSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const section = event.state?.section || 'home';
+      setActiveSection(section);
+    };
+
+    // Set initial state
+    if (!window.history.state) {
+      window.history.replaceState({ section: 'home' }, '', '#home');
+    }
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update activeSection function to include history
+  const navigateToSection = (section: string) => {
+    setActiveSection(section);
+    window.history.pushState({ section }, '', `#${section}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -292,9 +335,16 @@ export default function NSFinancialWebsite() {
     e.preventDefault();
     if (isSubmitting) return;
 
+    // Validate required fields
     if (!bookingForm.name || !bookingForm.email || !bookingForm.phone || 
         !bookingForm.service || !bookingForm.date || !bookingForm.time) {
       alert('Please fill in all required fields');
+      return;
+    }
+
+    // Additional validation for "Other" service
+    if (bookingForm.service === 'Other' && !bookingForm.otherService.trim()) {
+      alert('Please specify the service you need');
       return;
     }
 
@@ -320,6 +370,7 @@ export default function NSFinancialWebsite() {
             email: '',
             phone: '',
             service: '',
+            otherService: '',
             date: '',
             time: '',
             message: ''
@@ -341,7 +392,7 @@ export default function NSFinancialWebsite() {
       <div className="transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => setActiveSection('home')}>
+            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
               <div className="bg-gradient-to-r from-[#018880] to-[#002830] p-3 rounded-lg shadow-lg">
                 <Image
                   src="/logo_100x100_white.png"
@@ -366,7 +417,7 @@ export default function NSFinancialWebsite() {
               ].map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => setActiveSection(item.id)}
+                  onClick={() => navigateToSection(item.id)}
                   className={`capitalize text-sm font-medium px-4 py-2.5 rounded-lg transition-all duration-300 cursor-pointer tracking-wide ${
                     activeSection === item.id
                       ? 'bg-gradient-to-r from-[#018880] to-[#002830] text-white shadow-lg font-semibold'
@@ -386,7 +437,7 @@ export default function NSFinancialWebsite() {
                 <span>1-800-555-6933</span>
               </a>
               <button
-                onClick={() => setActiveSection('contact')}
+                onClick={() => navigateToSection('contact')}
                 className="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 cursor-pointer shadow-md border-2 bg-white text-[#018880] border-[#018880] hover:bg-[#018880] hover:text-white"
                 style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}
               >
@@ -448,7 +499,7 @@ export default function NSFinancialWebsite() {
             <AnimatedText />
 
             <button
-              onClick={() => setActiveSection('booking')}
+              onClick={() => navigateToSection('booking')}
               className="group bg-gradient-to-r from-[#018880] to-[#002830] text-white px-8 py-4 rounded-lg text-base font-bold hover:shadow-2xl transition-all duration-300 inline-flex items-center cursor-pointer animate-pulse-slow"
             >
               Book a Free Consultation
@@ -817,15 +868,13 @@ export default function NSFinancialWebsite() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center mb-4">
-              <div className="bg-gradient-to-r from-[#018880] to-[#002830] p-3 rounded-lg shadow-lg">
-                <Image
-                  src="/logo_300x100_white.png"
-                  alt="NS Financial Logo"
-                  width={150}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
+              <Image
+                src="/logo_300x100_white.png"
+                alt="NS Financial Logo"
+                width={150}
+                height={50}
+                className="object-contain"
+              />
             </div>
             <p className="text-gray-300 text-sm mt-4" style={{ fontFamily: "'Inter', 'Helvetica Neue', sans-serif" }}>
               Noura Salman (NS) Financial and Bookkeeping Services LLC

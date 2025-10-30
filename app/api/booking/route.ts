@@ -7,7 +7,10 @@ import fs from 'fs';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, service, date, time, message } = body;
+    const { name, email, phone, service, otherService, date, time, message } = body;
+
+    // Determine the actual service to display
+    const actualService = service === 'Other' ? otherService : service;
 
     // Google Calendar API setup (OAuth2)
     const { google } = require('googleapis');
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
       const event = await calendar.events.insert({
         calendarId: 'info@nsfinancialservice.com',
         requestBody: {
-          summary: `Consultation: ${service} with ${name}`,
+          summary: `Consultation: ${actualService} with ${name}`,
           description: message || '',
           start: { dateTime: eventStart.toISOString() },
           end: { dateTime: eventEnd.toISOString() },
@@ -79,6 +82,14 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !phone || !service || !date || !time) {
       return NextResponse.json(
         { error: 'All required fields must be filled' },
+        { status: 400 }
+      );
+    }
+
+    // Additional validation for "Other" service
+    if (service === 'Other' && !otherService) {
+      return NextResponse.json(
+        { error: 'Please specify the service you need' },
         { status: 400 }
       );
     }
@@ -124,7 +135,7 @@ export async function POST(request: NextRequest) {
             <tr><td style="padding: 6px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Email:</strong></td><td>${email}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Phone:</strong></td><td>${phone}</td></tr>
-            <tr><td style="padding: 6px 0;"><strong>Service:</strong></td><td>${service}</td></tr>
+            <tr><td style="padding: 6px 0;"><strong>Service:</strong></td><td>${actualService}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Preferred Date:</strong></td><td>${date}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Preferred Time:</strong></td><td>${time}</td></tr>
           </table>
@@ -160,7 +171,7 @@ export async function POST(request: NextRequest) {
           </div>
           <h2 style="color: #1a237e;">Thank You for Your Booking Request!</h2>
           <p>Dear ${name},</p>
-          <p>We have received your consultation booking request for <strong>${service}</strong>.</p>
+          <p>We have received your consultation booking request for <strong>${actualService}</strong>.</p>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="padding: 6px 0;"><strong>Requested Date:</strong></td><td>${date}</td></tr>
             <tr><td style="padding: 6px 0;"><strong>Requested Time:</strong></td><td>${time}</td></tr>
