@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Embed logo as Base64 data URI for email reliability
-    let logoUrl = "https://www.nsfinancialservice.com/logo.png";
+    let logoUrl: string | undefined = undefined;
     try {
       const logoPath = path.join(process.cwd(), "public", "logo.png");
       const logoData = fs.readFileSync(logoPath);
@@ -127,6 +127,10 @@ export async function POST(request: NextRequest) {
     } catch (e) {
       console.error("Failed to embed logo as Base64, falling back to public URL.", e);
     }
+    if (!logoUrl) {
+      logoUrl = "https://www.nsfinancialservice.com/logo.png";
+    }
+    console.log("DEBUG: logoUrl used in email:", logoUrl);
 
     // Email to business owner
     const ownerMailOptions = {
@@ -136,7 +140,7 @@ from: 'NS Financial Services <info@nsfinancialservice.com>',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
           <div style="text-align:center;">
-            <img src="${logoUrl || 'https://www.nsfinancialservice.com/logo.png'}" alt="NS Financial Logo" style="height: 100px;">
+            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 100px;">
           </div>
           <h2 style="color: #1a237e;">New Consultation Booking Request</h2>
           <table style="width: 100%; border-collapse: collapse;">
@@ -175,7 +179,7 @@ from: "NS Financial Services <info@nsfinancialservice.com>",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; background: #fafbfc;">
           <div style="text-align:center;">
-            <img src="${logoUrl || 'https://www.nsfinancialservice.com/logo.png'}" alt="NS Financial Logo" style="height: 100px;">
+            <img src="${logoUrl}" alt="NS Financial Logo" style="height: 100px;">
           </div>
           <h2 style="color: #1a237e;">Thank You for Your Booking Request!</h2>
           <p>Dear ${name},</p>
