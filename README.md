@@ -424,6 +424,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  <p>Made with ❤️ by NS Financial Services</p>
+  <p>Made with ❤️ by Karim Antar</p>
   <p>© 2025 NS Financial and Bookkeeping Services LLC. All rights reserved.</p>
 </div>
