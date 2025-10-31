@@ -962,53 +962,75 @@ export default function NSFinancialWebsite() {
     );
   });
 
-  const Contact = React.memo(() => (
-    <div className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-bold text-center mb-16 text-[#114040] animate-fadeIn">
-          Contact Us
-        </h2>
-        
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '0ms' }}>
-            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <Mail className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-[#114040]">Email</h3>
-            <a href="mailto:info@nsfinancialservice.com" className="text-[#018880] hover:text-[#002830] font-medium hover:underline transition-colors cursor-pointer">
-              info@nsfinancialservice.com
-            </a>
-          </div>
-          
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '150ms' }}>
-            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <Clock className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-[#114040]">Business Hours</h3>
-            <p className="text-gray-700">Monday - Friday</p>
-            <p className="text-gray-700 font-semibold">9:00 AM - 5:00 PM</p>
-          </div>
-          
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '300ms' }}>
-            <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <MapPin className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-[#114040]">Location</h3>
-            <p className="text-gray-700">1500 N. Grant St. Ste R</p>
-            <p className="text-gray-700">Denver, CO 80203</p>
-          </div>
-        </div>
+  const Contact = React.memo(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLDivElement>(null);
 
-        <div className="bg-gradient-to-r from-[#E6E6E0] to-white p-10 rounded-2xl text-center shadow-lg border border-gray-200 animate-fadeIn">
-          <h3 className="text-2xl font-bold mb-3 text-[#114040]">Nationwide Services</h3>
-          <p className="text-gray-700 text-lg max-w-3xl mx-auto">
-            We proudly serve clients nationwide, offering both in-person and virtual bookkeeping 
-            services to fit your business needs.
-          </p>
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.2 }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
+    return (
+      <div ref={sectionRef} className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className={`text-5xl font-bold text-center mb-16 text-[#114040] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Contact Us
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className={`text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-500 border border-gray-100 transform hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${isVisible ? 0 : 0}ms` }}>
+              <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Mail className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-[#114040]">Email</h3>
+              <a href="mailto:info@nsfinancialservice.com" className="text-[#018880] hover:text-[#002830] font-medium hover:underline transition-colors cursor-pointer">
+                info@nsfinancialservice.com
+              </a>
+            </div>
+            
+            <div className={`text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-500 border border-gray-100 transform hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${isVisible ? 100 : 0}ms` }}>
+              <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <Clock className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-[#114040]">Business Hours</h3>
+              <p className="text-gray-700">Monday - Friday</p>
+              <p className="text-gray-700 font-semibold">9:00 AM - 5:00 PM</p>
+            </div>
+            
+            <div className={`text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-500 border border-gray-100 transform hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${isVisible ? 200 : 0}ms` }}>
+              <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <MapPin className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-[#114040]">Location</h3>
+              <p className="text-gray-700">1500 N. Grant St. Ste R</p>
+              <p className="text-gray-700">Denver, CO 80203</p>
+            </div>
+          </div>
+
+          <div className={`bg-gradient-to-r from-[#E6E6E0] to-white p-10 rounded-2xl text-center shadow-lg border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
+            <h3 className="text-2xl font-bold mb-3 text-[#114040]">Nationwide Services</h3>
+            <p className="text-gray-700 text-lg max-w-3xl mx-auto">
+              We proudly serve clients nationwide, offering both in-person and virtual bookkeeping 
+              services to fit your business needs.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  ));
+    );
+  });
 
     const Footer = () => (
     <footer className="bg-gradient-to-br from-[#002830] to-[#114040] text-white py-12 px-4">
