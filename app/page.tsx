@@ -356,6 +356,10 @@ export default function NSFinancialWebsite() {
   // Update activeSection function to include history
   const navigateToSection = (section: string) => {
     setActiveSection(section);
+    // Reset booking confirmation when navigating to booking section
+    if (section === 'booking') {
+      setBookingSubmitted(false);
+    }
     window.history.pushState({ section }, '', `#${section}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -490,19 +494,17 @@ export default function NSFinancialWebsite() {
         });
         
         setBookingSubmitted(true);
-        setTimeout(() => {
-          setBookingSubmitted(false);
-          setBookingForm({
-            name: '',
-            email: '',
-            phone: '',
-            service: '',
-            otherService: '',
-            date: '',
-            time: '',
-            message: ''
-          });
-        }, 5000);
+        // Reset form fields but keep confirmation visible
+        setBookingForm({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          otherService: '',
+          date: '',
+          time: '',
+          message: ''
+        });
       } else {
         toast.dismiss(loadingToast);
         toast.error(`Error: ${data.error}`, {
