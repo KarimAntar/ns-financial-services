@@ -32,7 +32,7 @@ const AnimatedText = () => {
       } else {
         setCurrentText(fullText.substring(0, currentText.length + 1));
       }
-    }, isDeleting ? 50 : 100);
+    }, isDeleting ? 30 : 60);
 
     return () => clearTimeout(timeout);
   }, [currentText, isDeleting, currentIndex]);
@@ -659,7 +659,7 @@ export default function NSFinancialWebsite() {
 
         <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center z-10">
           {/* Left side - Image with professional fade */}
-          <div className="relative order-2 md:order-1 animate-fadeInLeft">
+          <div className="relative order-2 md:order-1">
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               {/* Professional gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#114040]/20 via-transparent to-[#018880]/20 z-10 pointer-events-none"></div>
@@ -682,7 +682,7 @@ export default function NSFinancialWebsite() {
           </div>
 
           {/* Right side - Text with animations */}
-          <div className="order-1 md:order-2 animate-fadeInRight">
+          <div className="order-1 md:order-2">
             <h1 className="mb-6 leading-tight text-[#114040]">
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 Noura Salman (NS)
@@ -970,7 +970,7 @@ export default function NSFinancialWebsite() {
         </h2>
         
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp">
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '0ms' }}>
             <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Mail className="w-8 h-8 text-white" />
             </div>
@@ -980,7 +980,7 @@ export default function NSFinancialWebsite() {
             </a>
           </div>
           
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '100ms' }}>
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '150ms' }}>
             <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Clock className="w-8 h-8 text-white" />
             </div>
@@ -989,7 +989,7 @@ export default function NSFinancialWebsite() {
             <p className="text-gray-700 font-semibold">9:00 AM - 5:00 PM</p>
           </div>
           
-          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '200ms' }}>
+          <div className="text-center p-8 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 animate-slideUp" style={{ animationDelay: '300ms' }}>
             <div className="w-16 h-16 bg-gradient-to-br from-[#018880] to-[#002830] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <MapPin className="w-8 h-8 text-white" />
             </div>
