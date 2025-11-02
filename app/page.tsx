@@ -552,8 +552,8 @@ export default function NSFinancialWebsite() {
                 <Image
                   src="/header.png"
                   alt="NS Financial Logo"
-                  width={180}
-                  height={60}
+                  width={210}
+                  height={70}
                   className="object-contain"
                 />
               </div>
@@ -880,11 +880,12 @@ export default function NSFinancialWebsite() {
             What About Us
           </h2>
           
-          <div className={`bg-gradient-to-br from-[#E6E6E0] to-white p-10 rounded-2xl shadow-xl border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
+          <div className={`bg-white p-10 rounded-2xl shadow-xl border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
             <p className="text-gray-700 leading-relaxed text-lg text-left">
               <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned
               business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses.
-              Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in
+              <br />
+              Founded by <strong className="text-[#018880]">Noura Salman</strong>, who holds a Bachelor's degree in
               Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience
               in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights
               to make confident, growth-driven decisions.
@@ -1035,7 +1036,7 @@ export default function NSFinancialWebsite() {
                 className="object-contain"
               />
             </div>
-            <p className="text-gray-300 text-sm mt-4" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+            <p className="text-gray-300 text-xs mt-4" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
               Noura Salman (NS) Financial and Bookkeeping Services LLC
             </p>
           </div>
