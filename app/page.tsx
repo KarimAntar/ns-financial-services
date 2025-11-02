@@ -76,12 +76,12 @@ const BookingSection = React.memo(function BookingSection({
           Let's Work Together
         </h2>
         <p className="text-center text-gray-600 text-lg mb-12">
-          Schedule a consultation to discuss how we can help your business thrive
+          Together, we bring clarity and security to your finances.
         </p>
 
         {bookingSubmitted ? (
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-500 rounded-2xl p-12 text-center shadow-xl animate-fadeIn">
-            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-12 h-12 text-white" />
             </div>
             <h3 className="text-3xl font-bold text-green-800 mb-4">Booking Received!</h3>
@@ -548,19 +548,14 @@ export default function NSFinancialWebsite() {
         <div className="transition-all duration-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-20">
-              <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => navigateToSection('home')}>
-                <div className="bg-gradient-to-r from-[#018880] to-[#002830] p-3 rounded-lg shadow-lg">
-                  <Image
-                    src="/logo_100x100_white.png"
-                    alt="NS Financial Logo"
-                    width={50}
-                    height={50}
-                    className="object-contain"
-                  />
-                </div>
-                <span className="text-base font-semibold transition-colors duration-300 tracking-wide text-[#114040]" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
-                  Financial Services
-                </span>
+              <div className="flex items-center group cursor-pointer" onClick={() => navigateToSection('home')}>
+                <Image
+                  src="/header.png"
+                  alt="NS Financial Logo"
+                  width={180}
+                  height={60}
+                  className="object-contain"
+                />
               </div>
 
               {/* Desktop Navigation */}
@@ -689,7 +684,7 @@ export default function NSFinancialWebsite() {
               <div className="text-4xl md:text-5xl font-bold mb-2">
                 Noura Salman (NS)
               </div>
-              <div className="text-2xl md:text-3xl font-semibold">
+              <div className="text-xl md:text-2xl font-semibold">
                 Financial and Bookkeeping Services LLC
               </div>
             </h1>
@@ -800,13 +795,13 @@ export default function NSFinancialWebsite() {
       {
         title: "Honest, Reliable, and Easy to Work With",
         description: "You can count on clear communication, accurate work, and real support whenever you need it. We believe trust and transparency are the foundation of every strong partnership.",
-        color: "from-[#002830] to-[#114040]",
+        color: "from-[#018880] to-[#002830]",
         icon: "Helping_You.png"
       },
       {
         title: "Helping You Stress Less and Grow More",
         description: "Managing your books shouldn't feel overwhelming. We keep things organized and simple, so you can focus on running your business while we take care of the rest.",
-        color: "from-[#114040] to-[#018880]",
+        color: "from-[#018880] to-[#002830]",
         icon: "Growing.png"
       }
     ];
@@ -886,12 +881,12 @@ export default function NSFinancialWebsite() {
           </h2>
           
           <div className={`bg-gradient-to-br from-[#E6E6E0] to-white p-10 rounded-2xl shadow-xl border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
-            <p className="text-gray-700 leading-relaxed text-lg text-center">
-              <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned 
-              business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses. 
-              Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in 
-              Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience 
-              in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights 
+            <p className="text-gray-700 leading-relaxed text-lg text-left">
+              <strong className="text-[#018880]">NS Financial & Bookkeeping Services LLC</strong> is a woman-owned
+              business based in Colorado, committed to delivering reliable bookkeeping and financial solutions for small businesses.
+              Founded by <strong className="text-[#114040]">Noura Salman</strong>, who holds a Bachelor's degree in
+              Accounting and a Master's in Finance and Risk Management, the firm brings over five years of professional experience
+              in credit analysis and financial reporting. Our goal is to empower business owners with accurate financial insights
               to make confident, growth-driven decisions.
             </p>
           </div>
@@ -1020,14 +1015,6 @@ export default function NSFinancialWebsite() {
               <p className="text-gray-700">1500 N. Grant St. Ste R</p>
               <p className="text-gray-700">Denver, CO 80203</p>
             </div>
-          </div>
-
-          <div className={`bg-gradient-to-r from-[#E6E6E0] to-white p-10 rounded-2xl text-center shadow-lg border border-gray-200 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'}`}>
-            <h3 className="text-2xl font-bold mb-3 text-[#114040]">Nationwide Services</h3>
-            <p className="text-gray-700 text-lg max-w-3xl mx-auto">
-              We proudly serve clients nationwide, offering both in-person and virtual bookkeeping 
-              services to fit your business needs.
-            </p>
           </div>
         </div>
       </div>
