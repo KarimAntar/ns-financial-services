@@ -930,7 +930,7 @@ export default function NSFinancialWebsite() {
           </h2>
           
           <p className="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
-            Join hundreds of successful business owners who trust us with their financial management
+            Together, we bring clarity and security to your finances.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
