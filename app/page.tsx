@@ -562,9 +562,9 @@ export default function NSFinancialWebsite() {
               <div className="hidden md:flex items-center space-x-2">
                 {[
                   { id: 'home', label: 'Home', icon: <Home className="w-4 h-4" /> },
-                  { id: 'about', label: 'About', icon: <Info className="w-4 h-4" /> },
                   { id: 'services', label: 'Services', icon: <Briefcase className="w-4 h-4" /> },
                   { id: 'booking', label: 'Book Your Consultation', icon: <Calendar className="w-4 h-4" /> },
+                  { id: 'about', label: 'About', icon: <Info className="w-4 h-4" /> },
                   { id: 'contact', label: 'Contact Us', icon: <MessageSquare className="w-4 h-4" /> }
                 ].map((item) => (
                   <button
@@ -610,9 +610,9 @@ export default function NSFinancialWebsite() {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg">
               {[
                 { id: 'home', label: 'Home', icon: <Home className="w-5 h-5" /> },
-                { id: 'about', label: 'About', icon: <Info className="w-5 h-5" /> },
                 { id: 'services', label: 'Services', icon: <Briefcase className="w-5 h-5" /> },
                 { id: 'booking', label: 'Book Your Consultation', icon: <Calendar className="w-5 h-5" /> },
+                { id: 'about', label: 'About', icon: <Info className="w-5 h-5" /> },
                 { id: 'contact', label: 'Contact Us', icon: <MessageSquare className="w-5 h-5" /> }
               ].map((item) => (
                 <button
